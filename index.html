@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Don Perno — Repuestos europeos bajo pedido. BMW, Audi, Mercedes-Benz, VW, Volvo, Porsche y más. Costa Rica.">
+<title>Don Perno | Repuestos europeos bajo pedido · Costa Rica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --amarillo: #F5C842;
+    --amarillo-oscuro: #C9991A;
+    --negro: #0F0F0F;
+    --gris-fondo: #F2F0EB;
+    --gris-borde: #D8D5CE;
+    --gris-texto: #5C5A55;
+    --blanco: #FDFCFA;
+    --rojo: #D84F3A;
+    --radio: 12px;
+    --radio-lg: 20px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--gris-fondo);
+    color: var(--negro);
+    min-height: 100vh;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--negro);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--amarillo);
+    letter-spacing: -0.5px;
+  }
+
+  .logo span { color: var(--blanco); font-weight: 700; }
+
+  .header-cta {
+    background: var(--amarillo);
+    color: var(--negro);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.15s;
+  }
+  .header-cta:hover { background: var(--amarillo-oscuro); }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--negro);
+    padding: 3.5rem 1.5rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(245,200,66,0.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    background: rgba(245,200,66,0.15);
+    color: var(--amarillo);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.9rem;
+    border-radius: 99px;
+    border: 1px solid rgba(245,200,66,0.3);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 8vw, 3.2rem);
+    color: var(--blanco);
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 1.25rem;
+    position: relative;
+  }
+
+  .hero h1 em { color: var(--amarillo); font-style: normal; }
+
+  .hero-sub {
+    color: rgba(253,252,250,0.65);
+    font-size: 1rem;
+    max-width: 340px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.65;
+  }
+
+  /* ── FORM CARD ── */
+  .form-card {
+    background: var(--blanco);
+    border-radius: var(--radio-lg);
+    padding: 1.75rem 1.5rem;
+    max-width: 480px;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.25), 0 8px 32px rgba(0,0,0,0.3);
+  }
+
+  .form-card h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 1.25rem;
+    color: var(--negro);
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .form-full { grid-column: 1 / -1; }
+
+  .field label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--gris-texto);
+    margin-bottom: 0.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .field select,
+  .field input,
+  .field textarea {
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    border: 1.5px solid var(--gris-borde);
+    border-radius: var(--radio);
+    background: var(--blanco);
+    color: var(--negro);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: border-color 0.15s;
+    outline: none;
+  }
+
+  .field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235C5A55' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.85rem center;
+    padding-right: 2.2rem;
+    cursor: pointer;
+  }
+
+  .field select:focus,
+  .field input:focus,
+  .field textarea:focus {
+    border-color: var(--amarillo-oscuro);
+    box-shadow: 0 0 0 3px rgba(245,200,66,0.2);
+  }
+
+  .field.error select,
+  .field.error input,
+  .field.error textarea {
+    border-color: var(--rojo);
+    box-shadow: 0 0 0 3px rgba(216,79,58,0.15);
+  }
+
+  .error-msg {
+    font-size: 0.72rem;
+    color: var(--rojo);
+    margin-top: 0.25rem;
+    display: none;
+  }
+  .field.error .error-msg { display: block; }
+
+  .field textarea { resize: vertical; min-height: 80px; }
+
+  .field select:disabled {
+    background-color: #f0ede8;
+    color: #aaa;
+    cursor: not-allowed;
+  }
+
+  /* paso-a-paso visual */
+  .form-step {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+  .step-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--gris-borde);
+    transition: background 0.2s;
+  }
+  .step-dot.active { background: var(--amarillo-oscuro); }
+  .step-label {
+    font-size: 0.75rem;
+    color: var(--gris-texto);
+    margin-left: 0.25rem;
+  }
+
+  .btn-submit {
+    width: 100%;
+    background: var(--amarillo);
+    color: var(--negro);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.9rem 1rem;
+    border: none;
+    border-radius: var(--radio);
+    cursor: pointer;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    transition: background 0.15s, transform 0.1s;
+    letter-spacing: -0.2px;
+  }
+
+  .btn-submit:hover { background: var(--amarillo-oscuro); }
+  .btn-submit:active { transform: scale(0.98); }
+  .btn-submit svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+  .form-nota {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--gris-texto);
+    margin-top: 0.75rem;
+  }
+
+  /* ── SECCIÓN CÓMO FUNCIONA ── */
+  .section {
+    padding: 3.5rem 1.5rem;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--amarillo-oscuro);
+    margin-bottom: 0.5rem;
+  }
+
+  .section h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.7rem;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    margin-bottom: 2rem;
+  }
+
+  .pasos { display: flex; flex-direction: column; gap: 0; }
+
+  .paso {
+    display: flex;
+    gap: 1rem;
+    padding-bottom: 2rem;
+    position: relative;
+  }
+
+  .paso:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 40px;
+    bottom: 0;
+    width: 2px;
+    background: var(--gris-borde);
+  }
+
+  .paso-num {
+    width: 40px; height: 40px;
+    background: var(--negro);
+    color: var(--amarillo);
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .paso-body h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+    padding-top: 0.55rem;
+  }
+
+  .paso-body p { font-size: 0.9rem; color: var(--gris-texto); line-height: 1.55; }
+
+  /* ── TRUST ── */
+  .trust-strip {
+    background: var(--negro);
+    padding: 2.5rem 1.5rem;
+    color: var(--blanco);
+  }
+
+  .trust-inner { max-width: 480px; margin: 0 auto; }
+
+  .trust-inner h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: var(--amarillo);
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.3px;
+  }
+
+  .trust-items { display: flex; flex-direction: column; gap: 1rem; }
+
+  .trust-item { display: flex; align-items: flex-start; gap: 0.85rem; }
+
+  .trust-icon {
+    width: 36px; height: 36px;
+    background: rgba(245,200,66,0.12);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.1rem;
+  }
+
+  .trust-item h4 { font-weight: 500; font-size: 0.95rem; margin-bottom: 0.15rem; color: var(--blanco); }
+  .trust-item p { font-size: 0.83rem; color: rgba(253,252,250,0.55); line-height: 1.5; }
+
+  /* ── MARCAS ── */
+  .marcas-section {
+    padding: 2.5rem 1.5rem;
+    max-width: 480px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .marcas-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gris-texto);
+    margin-bottom: 1.25rem;
+  }
+
+  .marcas-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+
+  .marca-pill {
+    background: var(--blanco);
+    border: 1.5px solid var(--gris-borde);
+    border-radius: 99px;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--negro);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--negro);
+    color: rgba(253,252,250,0.45);
+    text-align: center;
+    padding: 2rem 1.5rem;
+    font-size: 0.8rem;
+  }
+
+  footer strong { color: var(--amarillo); font-family: 'Syne', sans-serif; }
+
+  /* ── WhatsApp FAB ── */
+  .wa-fab {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 56px; height: 56px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+    cursor: pointer;
+    z-index: 200;
+    text-decoration: none;
+    transition: transform 0.15s;
+  }
+  .wa-fab:hover { transform: scale(1.08); }
+  .wa-fab svg { width: 28px; height: 28px; }
+
+  /* ── ANIMACIONES ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tag  { animation: fadeUp 0.4s ease both; animation-delay: 0.05s; }
+  .hero h1   { animation: fadeUp 0.4s ease both; animation-delay: 0.15s; }
+  .hero-sub  { animation: fadeUp 0.4s ease both; animation-delay: 0.25s; }
+  .form-card { animation: fadeUp 0.5s ease both; animation-delay: 0.35s; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">Don<span>Perno</span></div>
+  <a href="#cotizar" class="header-cta">Pedir cotización</a>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-tag">🔩 Repuestos europeos bajo pedido · Costa Rica</div>
+  <h1>Si existe,<br><em>Don Perno</em><br>lo consigue.</h1>
+  <p class="hero-sub">Describinos el repuesto que necesitás para tu vehículo europeo y te enviamos cotización por WhatsApp. OEM, genuino o aftermarket de calidad — lo que sea.</p>
+
+  <!-- FORMULARIO -->
+  <div class="form-card" id="cotizar">
+    <h2>¿Qué repuesto necesitás?</h2>
+
+    <div class="form-step" id="step-indicator">
+      <div class="step-dot active" id="dot-1"></div>
+      <div class="step-dot" id="dot-2"></div>
+      <div class="step-dot" id="dot-3"></div>
+      <div class="step-dot" id="dot-4"></div>
+      <span class="step-label" id="step-label">Seleccioná el año</span>
+    </div>
+
+    <div class="form-grid">
+
+      <!-- AÑO -->
+      <div class="field" id="field-anio">
+        <label for="anio">Año</label>
+        <select id="anio" onchange="onAnio()">
+          <option value="">Seleccioná</option>
+        </select>
+        <span class="error-msg">Requerido</span>
+      </div>
+
+      <!-- MARCA -->
+      <div class="field" id="field-marca">
+        <label for="marca">Marca</label>
+        <select id="marca" disabled onchange="onMarca()">
+          <option value="">Primero el año</option>
+        </select>
+        <span class="error-msg">Requerido</span>
+      </div>
+
+      <!-- MODELO -->
+      <div class="field form-full" id="field-modelo">
+        <label for="modelo">Modelo</label>
+        <select id="modelo" disabled onchange="onModelo()">
+          <option value="">Seleccioná la marca primero</option>
+        </select>
+        <span class="error-msg">Requerido</span>
+      </div>
+
+      <!-- MOTOR -->
+      <div class="field form-full" id="field-motor">
+        <label for="motor">Motor <span style="font-weight:400;text-transform:none;letter-spacing:0;">(opcional si no lo sabés)</span></label>
+        <select id="motor" disabled>
+          <option value="">Seleccioná el modelo primero</option>
+        </select>
+      </div>
+
+      <!-- REPUESTO -->
+      <div class="field form-full" id="field-repuesto">
+        <label for="repuesto">Repuesto que necesitás</label>
+        <input type="text" id="repuesto" placeholder="Ej: pastillas de freno, bomba de agua, alternador…" oninput="updateSteps()">
+        <span class="error-msg">Describí el repuesto</span>
+      </div>
+
+      <!-- VIN -->
+      <div class="field form-full">
+        <label for="vin">VIN / número de chasis <span style="font-weight:400;text-transform:none;letter-spacing:0;">(opcional pero ayuda mucho)</span></label>
+        <input type="text" id="vin" placeholder="17 caracteres — en el parabrisas o tarjeta de circulación">
+      </div>
+
+      <!-- NOTAS -->
+      <div class="field form-full">
+        <label for="notas">Notas adicionales</label>
+        <textarea id="notas" placeholder="Tracción, versión específica, síntoma, cualquier detalle que tengás…"></textarea>
+      </div>
+
+    </div>
+
+    <button class="btn-submit" onclick="enviarCotizacion()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+      </svg>
+      Solicitar cotización por WhatsApp
+    </button>
+    <p class="form-nota">Sin compromiso. Respondemos el mismo día hábil.</p>
+  </div>
+</section>
+
+<!-- CÓMO FUNCIONA -->
+<section class="section">
+  <p class="section-tag">El proceso</p>
+  <h2>Simple como debe ser.</h2>
+  <div class="pasos">
+    <div class="paso">
+      <div class="paso-num">1</div>
+      <div class="paso-body">
+        <h3>Nos describís lo que necesitás</h3>
+        <p>Llenás el formulario con los datos del vehículo y el repuesto. Entre más detalle, más precisa la cotización.</p>
+      </div>
+    </div>
+    <div class="paso">
+      <div class="paso-num">2</div>
+      <div class="paso-body">
+        <h3>Te enviamos la cotización</h3>
+        <p>Buscamos en nuestros proveedores especializados en partes europeas. Te mandamos precio, procedencia y tiempo de entrega.</p>
+      </div>
+    </div>
+    <div class="paso">
+      <div class="paso-num">3</div>
+      <div class="paso-body">
+        <h3>Confirmás y coordinamos entrega</h3>
+        <p>Si te cuadra el precio, confirmás y acordamos el pago y la entrega. Sin sorpresas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARCAS -->
+<section class="marcas-section">
+  <p class="marcas-label">Marcas que atendemos</p>
+  <div class="marcas-grid">
+    <span class="marca-pill">BMW</span>
+    <span class="marca-pill">Audi</span>
+    <span class="marca-pill">Volkswagen</span>
+    <span class="marca-pill">Mercedes-Benz</span>
+    <span class="marca-pill">Volvo</span>
+    <span class="marca-pill">Porsche</span>
+    <span class="marca-pill">Saab</span>
+    <span class="marca-pill">Jaguar</span>
+    <span class="marca-pill">Land Rover</span>
+    <span class="marca-pill">Mini</span>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="trust-strip">
+  <div class="trust-inner">
+    <h2>¿Por qué Don Perno?</h2>
+    <div class="trust-items">
+      <div class="trust-item">
+        <div class="trust-icon">🎯</div>
+        <div>
+          <h4>Fitment garantizado</h4>
+          <p>Verificamos compatibilidad antes de cotizar. Si el repuesto no encaja con tu vehículo, no te lo vendemos.</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🇪🇺</div>
+        <div>
+          <h4>Especialistas en europeos</h4>
+          <p>No vendemos de todo para todos. Solo partes europeas, con proveedores especializados en esas marcas.</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">💬</div>
+        <div>
+          <h4>Todo por WhatsApp, sin complicaciones</h4>
+          <p>Sin portales raros ni cuentas que crear. Escribís, te respondemos, coordinamos. Así de fácil.</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">✅</div>
+        <div>
+          <h4>OEM genuino o aftermarket de calidad — vos elegís</h4>
+          <p>Te explicamos la diferencia, el precio y la procedencia. La decisión siempre es tuya.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>DonPerno</strong> · Repuestos europeos bajo pedido · Costa Rica</p>
+  <p style="margin-top:0.4rem;">© 2025 · Todos los derechos reservados</p>
+</footer>
+
+<!-- WhatsApp FAB -->
+<a class="wa-fab" href="https://wa.me/50600000000" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+// ════════════════════════════════════════
+// DATOS: modelos y motores por marca/año
+// ════════════════════════════════════════
+const DATA = {
+  BMW: {
+    modelos: {
+      'Serie 1': { motores: ['116i 1.5T','118i 1.5T','120i 2.0T','125i 2.0T','118d 2.0','120d 2.0','M135i 2.0T'] },
+      'Serie 2': { motores: ['220i 2.0T','230i 2.0T','218d 2.0','220d 2.0','M235i 3.0T','M240i 3.0T'] },
+      'Serie 3': { motores: ['318i 1.5T','320i 2.0T','330i 2.0T','340i 3.0T','316d 2.0','318d 2.0','320d 2.0','330d 3.0','M3 3.0T'] },
+      'Serie 4': { motores: ['420i 2.0T','430i 2.0T','440i 3.0T','420d 2.0','430d 3.0','M4 3.0T'] },
+      'Serie 5': { motores: ['520i 2.0T','523i 2.5','528i 2.0T','530i 2.0T','540i 3.0T','520d 2.0','525d 2.5','530d 3.0','M5 4.4T'] },
+      'Serie 7': { motores: ['730i 2.0T','740i 3.0T','750i 4.4T','730d 3.0','740d 3.0','M760i 6.6T'] },
+      'X1': { motores: ['sDrive18i 1.5T','sDrive20i 2.0T','xDrive20i 2.0T','sDrive18d 2.0','xDrive20d 2.0','xDrive25d 2.0'] },
+      'X3': { motores: ['xDrive20i 2.0T','xDrive30i 2.0T','M40i 3.0T','xDrive20d 2.0','xDrive30d 3.0','M40d 3.0'] },
+      'X5': { motores: ['xDrive40i 3.0T','xDrive50i 4.4T','M50i 4.4T','xDrive30d 3.0','xDrive40d 3.0','M50d 3.0','xDrive45e híbrido'] },
+      'X6': { motores: ['xDrive40i 3.0T','xDrive50i 4.4T','M50i 4.4T','xDrive30d 3.0','xDrive40d 3.0','M50d 3.0'] },
+      'X7': { motores: ['xDrive40i 3.0T','xDrive50i 4.4T','M50i 4.4T','xDrive30d 3.0','xDrive40d 3.0','M50d 3.0'] },
+      'Z4': { motores: ['sDrive20i 2.0T','sDrive30i 2.0T','M40i 3.0T'] },
+      'M3': { motores: ['3.0T 6cil bicicilíndrico','CS 3.0T'] },
+      'M5': { motores: ['4.4T V8 bicicilíndrico','CS 4.4T'] },
+    },
+    anioDesde: 1993
+  },
+  Audi: {
+    modelos: {
+      'A1': { motores: ['1.0 TFSI','1.4 TFSI','1.6 TDI','2.0 TDI'] },
+      'A3': { motores: ['1.2 TFSI','1.4 TFSI','1.5 TFSI','1.8 TFSI','2.0 TFSI','1.6 TDI','2.0 TDI','2.0 TDI quattro','S3 2.0 TFSI','RS3 2.5 TFSI'] },
+      'A4': { motores: ['1.4 TFSI','1.8 TFSI','2.0 TFSI','2.0 TFSI quattro','3.0 TFSI quattro','2.0 TDI','3.0 TDI quattro','S4 3.0 TFSI','RS4 2.9 TFSI'] },
+      'A5': { motores: ['1.8 TFSI','2.0 TFSI','3.0 TFSI quattro','2.0 TDI','3.0 TDI quattro','S5 3.0 TFSI','RS5 2.9 TFSI'] },
+      'A6': { motores: ['1.8 TFSI','2.0 TFSI','2.0 TFSI quattro','3.0 TFSI quattro','2.0 TDI','3.0 TDI quattro','S6 4.0 TFSI','RS6 4.0 TFSI'] },
+      'A7': { motores: ['2.0 TFSI','3.0 TFSI quattro','3.0 TDI quattro','S7 4.0 TFSI','RS7 4.0 TFSI'] },
+      'A8': { motores: ['3.0 TFSI','4.0 TFSI','6.3 W12','3.0 TDI','4.2 TDI','S8 4.0 TFSI'] },
+      'Q3': { motores: ['1.4 TFSI','1.5 TFSI','2.0 TFSI quattro','1.6 TDI','2.0 TDI quattro','RS Q3 2.5 TFSI'] },
+      'Q5': { motores: ['2.0 TFSI','2.0 TFSI quattro','3.0 TFSI quattro','2.0 TDI quattro','3.0 TDI quattro','SQ5 3.0 TFSI','SQ5 3.0 TDI'] },
+      'Q7': { motores: ['2.0 TFSI quattro','3.0 TFSI quattro','4.2 FSI quattro','3.0 TDI quattro','4.2 TDI quattro','SQ7 4.0 TDI'] },
+      'Q8': { motores: ['3.0 TFSI quattro','55 TFSI quattro','3.0 TDI quattro','SQ8 4.0 TDI','RS Q8 4.0 TFSI'] },
+      'TT': { motores: ['1.8 TFSI','2.0 TFSI','2.0 TDI','TTS 2.0 TFSI','TTRS 2.5 TFSI'] },
+      'R8': { motores: ['4.2 FSI','5.2 FSI','5.2 FSI quattro','GT 5.2 FSI'] },
+    },
+    anioDesde: 1995
+  },
+  Volkswagen: {
+    modelos: {
+      'Golf': { motores: ['1.0 TSI','1.2 TSI','1.4 TSI','1.5 TSI','1.6 TDI','2.0 TDI','2.0 GTI TSI','Golf R 2.0 TSI','e-Golf eléctrico'] },
+      'Jetta': { motores: ['1.2 TSI','1.4 TSI','1.6','1.8 TSI','2.0 TSI','1.6 TDI','2.0 TDI','GLI 2.0 TSI'] },
+      'Passat': { motores: ['1.4 TSI','1.8 TSI','2.0 TSI','1.6 TDI','2.0 TDI','3.6 V6 4Motion','GTE híbrido'] },
+      'Tiguan': { motores: ['1.4 TSI','1.5 TSI','2.0 TSI 4Motion','2.0 TDI','2.0 TDI 4Motion','R 2.0 TSI'] },
+      'Touareg': { motores: ['2.0 TSI','3.0 TSI V6','3.0 TDI V6','4.2 TDI V8','eHybrid 3.0 TSI','R 4.0 TSI V8'] },
+      'Polo': { motores: ['1.0','1.0 TSI','1.0 TGI','1.4 TDI','1.6 TDI','GTI 2.0 TSI'] },
+      'T-Cross': { motores: ['1.0 TSI','1.5 TSI','1.6 TDI'] },
+      'T-Roc': { motores: ['1.0 TSI','1.5 TSI','2.0 TSI 4Motion','1.6 TDI','2.0 TDI','R 2.0 TSI'] },
+      'Amarok': { motores: ['2.0 BiTDI','3.0 TDI V6','3.0 TDI V6 4Motion','V6 TDI'] },
+      'Caddy': { motores: ['1.0 TSI','1.4 TGI','1.5 TSI','2.0 TDI'] },
+      'Sharan': { motores: ['1.4 TSI','2.0 TDI','2.0 TDI 4Motion'] },
+    },
+    anioDesde: 1990
+  },
+  'Mercedes-Benz': {
+    modelos: {
+      'Clase A': { motores: ['A160 1.6','A180 1.3T','A200 1.3T','A220 2.0T','A180d 1.5','A200d 2.0','AMG A35 2.0T','AMG A45 S 2.0T'] },
+      'Clase B': { motores: ['B160 1.6','B180 1.3T','B200 1.3T','B180d 1.5','B200d 2.0'] },
+      'Clase C': { motores: ['C180 1.6T','C200 1.5T','C220d 2.0','C300 2.0T','C300d 2.0','C400 3.0T','AMG C43 3.0T','AMG C63 4.0T','AMG C63 S 4.0T'] },
+      'Clase E': { motores: ['E180 1.5T','E200 1.5T','E220d 2.0','E300 2.0T','E300d 2.0','E350 3.0T','E400 3.0T','AMG E43 3.0T','AMG E53 3.0T','AMG E63 S 4.0T'] },
+      'Clase S': { motores: ['S350d 3.0','S400 3.0T','S450 3.0T','S500 4.0T','S600 6.0 V12','AMG S63 4.0T','AMG S65 6.0 V12','S580 4.0T'] },
+      'GLA': { motores: ['GLA180 1.3T','GLA200 1.3T','GLA220d 2.0','GLA250 2.0T','GLA220 4MATIC','AMG GLA35 2.0T','AMG GLA45 S 2.0T'] },
+      'GLC': { motores: ['GLC200 1.5T','GLC220d 2.0','GLC300 2.0T','GLC300d 2.0','GLC350e híbrido','AMG GLC43 3.0T','AMG GLC63 S 4.0T'] },
+      'GLE': { motores: ['GLE300d 2.0','GLE350d 3.0','GLE350 2.0T','GLE450 3.0T','GLE53 AMG 3.0T','GLE63 S AMG 4.0T','GLE350de híbrido'] },
+      'GLS': { motores: ['GLS350d 3.0','GLS400d 3.0','GLS450 3.0T','GLS580 4.0T','AMG GLS63 4.0T'] },
+      'Sprinter': { motores: ['214 CDI 2.1','216 CDI 2.1','314 CDI 2.1','316 CDI 2.1','414 CDI 2.1','416 CDI 2.1','519 CDI 3.0'] },
+      'Vito': { motores: ['109 CDI 1.6','111 CDI 2.1','114 CDI 2.1','116 CDI 2.1','119 CDI 3.0'] },
+    },
+    anioDesde: 1990
+  },
+  Volvo: {
+    modelos: {
+      'S40': { motores: ['1.6','1.8','2.0','2.4','1.6D','2.0D','2.0T','T5 2.5T','D5 2.4'] },
+      'S60': { motores: ['2.0T','2.4','T5 2.0T','T6 3.0T','T8 híbrido','D3 2.0','D4 2.0','D5 2.4','Polestar 2.0T'] },
+      'S80': { motores: ['2.4','2.9 T6','3.2','4.4 V8','T5 2.0T','T6 3.0T','D3 2.0','D4 2.0','D5 2.4'] },
+      'S90': { motores: ['T5 2.0T','T6 2.0T AWD','T8 Twin Engine híbrido','D4 2.0','D5 2.0 AWD'] },
+      'V40': { motores: ['1.5T','2.0T','T5 2.0T','D2 1.6','D3 2.0','D4 2.0','Cross Country 2.0T'] },
+      'V60': { motores: ['T3 1.5T','T5 2.0T','T6 2.0T AWD','T8 híbrido','D2 2.0','D3 2.0','D4 2.0','D5 2.4'] },
+      'V90': { motores: ['T5 2.0T','T6 2.0T AWD','T8 Twin Engine','D4 2.0','D5 2.0 AWD','Cross Country D5'] },
+      'XC40': { motores: ['T2 1.5','T3 1.5T','T4 2.0T','T5 2.0T AWD','Recharge eléctrico','B3 mild hybrid','B4 mild hybrid'] },
+      'XC60': { motores: ['T5 2.0T','T6 2.0T AWD','T8 Twin Engine','D4 2.0','D5 2.4 AWD','B4 mild hybrid','B5 mild hybrid AWD'] },
+      'XC90': { motores: ['T5 2.0T','T6 2.0T AWD','T8 Twin Engine','D4 2.0','D5 2.4 AWD','B5 mild hybrid','B6 mild hybrid'] },
+      'C30': { motores: ['1.6','1.8','2.0','T5 2.5','D3 2.0','D4 2.0'] },
+      'C70': { motores: ['2.0T','2.5T','T5 2.5T','D4 2.4','D5 2.4'] },
+    },
+    anioDesde: 1990
+  },
+  Porsche: {
+    modelos: {
+      '911': { motores: ['Carrera 3.0T','Carrera S 3.0T','Carrera 4 3.0T','Carrera 4S 3.0T','Targa 4 3.0T','Targa 4S 3.0T','GT3 4.0 atmosférico','GT3 RS 4.0','Turbo 3.8T','Turbo S 3.8T'] },
+      'Cayenne': { motores: ['2.0T','3.0T V6','3.6 V6','S 2.9 V6T','GTS 4.0 V8','Turbo 4.0 V8','Turbo S E-Hybrid','E-Hybrid 3.0T','Diesel 3.0 V6','S Diesel 4.2 V8'] },
+      'Macan': { motores: ['2.0T','S 3.0T','GTS 2.9T','Turbo 2.9T','S Diesel 3.0 V6'] },
+      'Panamera': { motores: ['2.9 V6T','4S 2.9 V6T','GTS 4.0 V8','Turbo 4.0 V8','Turbo S 4.0 V8','4 E-Hybrid 2.9T','Turbo S E-Hybrid','Diesel 3.0 V6'] },
+      'Taycan': { motores: ['4S dual motor eléctrico','Turbo eléctrico','Turbo S eléctrico','Cross Turismo 4S','Sport Turismo'] },
+      'Boxster': { motores: ['2.0T','2.5 GTS T','718 Boxster 2.0T','718 S 2.5T','718 GTS 4.0','718 GT4 4.0','Spyder 4.0'] },
+      'Cayman': { motores: ['2.0T','2.5 GTS T','718 Cayman 2.0T','718 S 2.5T','718 GTS 4.0','GT4 4.0','GT4 RS 4.0'] },
+    },
+    anioDesde: 1996
+  },
+  Saab: {
+    modelos: {
+      '9-3': { motores: ['1.8T','2.0T','2.0 Turbo','2.8T V6 Aero','1.9 TiD','2.2 TiD'] },
+      '9-5': { motores: ['2.0T','2.3T','2.3 Hirsch','3.0T V6','1.9 TiD','2.2 TiD','2.3T Aero'] },
+      '9-7X': { motores: ['4.2i V8','5.3i V8','6.0i V8'] },
+    },
+    anioDesde: 1994
+  },
+  Jaguar: {
+    modelos: {
+      'XE': { motores: ['2.0D','2.0T','25t','30t','S 3.0 V6','R-Sport 2.0T'] },
+      'XF': { motores: ['2.0D','2.0T','25t','30t','S 3.0 V6 SC','Portfolio 2.2D'] },
+      'XJ': { motores: ['2.0T','3.0 V6','5.0 V8','5.0 V8 SC','R 5.0 V8 SC','XJR575 5.0 V8'] },
+      'F-Type': { motores: ['2.0T','3.0 V6','3.0 V6 S','5.0 V8 SC','R 5.0 V8 SC','SVR 5.0 V8'] },
+      'F-Pace': { motores: ['2.0D','2.0T','25t AWD','30t AWD','S 3.0 V6 SC','SVR 5.0 V8'] },
+      'E-Pace': { motores: ['2.0D','2.0T','P200 AWD','P250 AWD','P300 AWD'] },
+      'I-Pace': { motores: ['EV400 eléctrico','SE 400 eléctrico','HSE 400 eléctrico'] },
+    },
+    anioDesde: 1998
+  },
+  'Land Rover': {
+    modelos: {
+      'Discovery': { motores: ['2.0 SD4','3.0 SDV6','3.0 TDV6','3.0 V6 SC','5.0 V8 SC','HSE 3.0 SDV6'] },
+      'Discovery Sport': { motores: ['2.0 eD4','2.0 TD4','2.0 Si4','P200','P250 AWD'] },
+      'Range Rover': { motores: ['3.0 SDV6','4.4 SDV8','3.0 V6 SC','5.0 V8 SC','P400e híbrido','D250','D300','P400','P525 V8'] },
+      'Range Rover Sport': { motores: ['2.0 SD4','3.0 SDV6','4.4 SDV8','5.0 V8 SC','SVR 5.0 V8','P400e híbrido'] },
+      'Range Rover Evoque': { motores: ['2.0 eD4','2.0 TD4','2.0 Si4','P200','P250 AWD','P300 AWD'] },
+      'Range Rover Velar': { motores: ['2.0D','2.0T','3.0 V6 SC','P250 AWD','P380 V6 SC','D180','D240','D300'] },
+      'Defender': { motores: ['2.0 D200','3.0 D250','3.0 D300','2.0 P300 AWD','3.0 P400 AWD','V8 5.0 SC'] },
+    },
+    anioDesde: 1990
+  },
+  Mini: {
+    modelos: {
+      'Cooper': { motores: ['1.2T','1.5T','2.0T S','Cooper SE eléctrico','D 1.5','SD 2.0'] },
+      'Cooper Cabrio': { motores: ['1.5T','2.0T S','D 1.5','SD 2.0'] },
+      'Clubman': { motores: ['1.5T','2.0T S','Cooper SE híbrido','D 1.5','SD 2.0','JCW 2.0T'] },
+      'Countryman': { motores: ['1.5T','2.0T S ALL4','Cooper SE ALL4 híbrido','D 1.5','SD 2.0 ALL4','JCW 2.0T ALL4'] },
+      'Paceman': { motores: ['1.6T','2.0T S','D 1.6','SD 2.0','JCW 1.6T'] },
+      'Coupe': { motores: ['1.6T','2.0T S','R 1.6T','JCW 1.6T'] },
+    },
+    anioDesde: 2001
+  }
+};
+
+// ════════════════════════════════════════
+// NÚMERO DE WHATSAPP — cambiá este valor
+// ════════════════════════════════════════
+const WA_NUMERO = '50600000000';
+
+// ── POBLAR AÑOS ──
+(function() {
+  const sel = document.getElementById('anio');
+  const anioActual = new Date().getFullYear();
+  for (let y = anioActual; y >= 1990; y--) {
+    const opt = document.createElement('option');
+    opt.value = y;
+    opt.textContent = y;
+    sel.appendChild(opt);
+  }
+})();
+
+// ── PASOS: actualizar indicador ──
+function updateSteps() {
+  const anio     = document.getElementById('anio').value;
+  const marca    = document.getElementById('marca').value;
+  const modelo   = document.getElementById('modelo').value;
+  const repuesto = document.getElementById('repuesto').value.trim();
+
+  const dots = [
+    document.getElementById('dot-1'),
+    document.getElementById('dot-2'),
+    document.getElementById('dot-3'),
+    document.getElementById('dot-4'),
+  ];
+  const label = document.getElementById('step-label');
+
+  dots.forEach(d => d.classList.remove('active'));
+
+  if (!anio)          { dots[0].classList.add('active'); label.textContent = 'Seleccioná el año'; }
+  else if (!marca)    { dots[1].classList.add('active'); label.textContent = 'Seleccioná la marca'; }
+  else if (!modelo)   { dots[2].classList.add('active'); label.textContent = 'Seleccioná el modelo'; }
+  else if (!repuesto) { dots[3].classList.add('active'); label.textContent = 'Describí el repuesto'; }
+  else { dots.forEach(d => d.classList.add('active')); label.textContent = '¡Listo para enviar!'; }
+}
+
+// ── SELECCIÓN DE AÑO → habilita marca ──
+function onAnio() {
+  const anio = parseInt(document.getElementById('anio').value);
+  const selMarca = document.getElementById('marca');
+
+  selMarca.innerHTML = '';
+  document.getElementById('modelo').innerHTML = '<option value="">Seleccioná la marca primero</option>';
+  document.getElementById('modelo').disabled = true;
+  document.getElementById('motor').innerHTML = '<option value="">Seleccioná el modelo primero</option>';
+  document.getElementById('motor').disabled = true;
+
+  if (!anio) { selMarca.disabled = true; selMarca.innerHTML = '<option value="">Primero el año</option>'; updateSteps(); return; }
+
+  const primera = document.createElement('option');
+  primera.value = ''; primera.textContent = 'Seleccioná la marca';
+  selMarca.appendChild(primera);
+
+  Object.entries(DATA).forEach(([marca, info]) => {
+    if (anio >= info.anioDesde) {
+      const opt = document.createElement('option');
+      opt.value = marca; opt.textContent = marca;
+      selMarca.appendChild(opt);
+    }
+  });
+
+  selMarca.disabled = false;
+  document.getElementById('field-anio').classList.remove('error');
+  updateSteps();
+}
+
+// ── SELECCIÓN DE MARCA → carga modelos ──
+function onMarca() {
+  const marca = document.getElementById('marca').value;
+  const selModelo = document.getElementById('modelo');
+
+  selModelo.innerHTML = '';
+  document.getElementById('motor').innerHTML = '<option value="">Seleccioná el modelo primero</option>';
+  document.getElementById('motor').disabled = true;
+
+  if (!marca) { selModelo.disabled = true; selModelo.innerHTML = '<option value="">Seleccioná la marca primero</option>'; updateSteps(); return; }
+
+  const primera = document.createElement('option');
+  primera.value = ''; primera.textContent = 'Seleccioná el modelo';
+  selModelo.appendChild(primera);
+
+  const modelos = DATA[marca]?.modelos || {};
+  Object.keys(modelos).forEach(m => {
+    const opt = document.createElement('option');
+    opt.value = m; opt.textContent = m;
+    selModelo.appendChild(opt);
+  });
+
+  selModelo.disabled = false;
+  document.getElementById('field-marca').classList.remove('error');
+  updateSteps();
+}
+
+// ── SELECCIÓN DE MODELO → carga motores ──
+function onModelo() {
+  const marca    = document.getElementById('marca').value;
+  const modelo   = document.getElementById('modelo').value;
+  const selMotor = document.getElementById('motor');
+
+  selMotor.innerHTML = '';
+
+  if (!modelo) { selMotor.disabled = true; selMotor.innerHTML = '<option value="">Seleccioná el modelo primero</option>'; updateSteps(); return; }
+
+  const primera = document.createElement('option');
+  primera.value = ''; primera.textContent = 'Seleccioná el motor (opcional)';
+  selMotor.appendChild(primera);
+
+  const motores = DATA[marca]?.modelos[modelo]?.motores || [];
+  motores.forEach(mo => {
+    const opt = document.createElement('option');
+    opt.value = mo; opt.textContent = mo;
+    selMotor.appendChild(opt);
+  });
+
+  selMotor.disabled = false;
+  document.getElementById('field-modelo').classList.remove('error');
+  updateSteps();
+}
+
+// ── VALIDAR Y ENVIAR ──
+function enviarCotizacion() {
+  const requeridos = [
+    { id: 'anio',     fieldId: 'field-anio' },
+    { id: 'marca',    fieldId: 'field-marca' },
+    { id: 'modelo',   fieldId: 'field-modelo' },
+    { id: 'repuesto', fieldId: 'field-repuesto' },
+  ];
+
+  let ok = true;
+  requeridos.forEach(c => {
+    const el    = document.getElementById(c.id);
+    const field = document.getElementById(c.fieldId);
+    if (!el.value.trim()) { field.classList.add('error'); ok = false; }
+    else                  { field.classList.remove('error'); }
+  });
+
+  if (!ok) return;
+
+  const anio     = document.getElementById('anio').value;
+  const marca    = document.getElementById('marca').value;
+  const modelo   = document.getElementById('modelo').value;
+  const motor    = document.getElementById('motor').value;
+  const repuesto = document.getElementById('repuesto').value;
+  const vin      = document.getElementById('vin').value;
+  const notas    = document.getElementById('notas').value;
+
+  let msg = `Hola Don Perno 🔩 Necesito cotización:\n\n`;
+  msg += `🚗 *Vehículo:* ${marca} ${modelo} ${anio}\n`;
+  if (motor)  msg += `⚙️ *Motor:* ${motor}\n`;
+  msg += `🔧 *Repuesto:* ${repuesto}\n`;
+  if (vin)    msg += `🪪 *VIN:* ${vin}\n`;
+  if (notas)  msg += `📝 *Notas:* ${notas}\n`;
+
+  const url = `https://wa.me/${WA_NUMERO}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
+
+// Limpiar errores al interactuar
+['anio','marca','modelo','repuesto'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  ['change','input'].forEach(ev => {
+    el.addEventListener(ev, function() {
+      const p = this.closest('.field');
+      if (p) p.classList.remove('error');
+      updateSteps();
+    });
+  });
+});
+</script>
+
+</body>
+</html>
