@@ -355,6 +355,11 @@ footer{background:var(--navy);padding:56px 32px 32px}
         <input type="text" id="inp-part" placeholder="Ej: bobinas, bomba de agua, bujías…"/>
       </div>
 
+      <div class="f-group" id="email-field-wrap" style="display:none">
+        <label>Tu correo</label>
+        <input type="email" id="inp-email" placeholder="tu@correo.com"/>
+      </div>
+
       <div class="qc-submit">
         <button class="btn-submit" onclick="submitQuote()">
           Enviar por WhatsApp
@@ -365,6 +370,11 @@ footer{background:var(--navy);padding:56px 32px 32px}
           <span class="wa-badge"></span>
           Escribinos directamente
         </a>
+        <button class="btn-wa-qc" id="email-quote" type="button" style="margin-top:8px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span id="email-quote-label">Enviar por correo</span>
+        </button>
+        <p id="email-status" style="font-size:12px;text-align:center;margin-top:8px;color:var(--muted);display:none"></p>
       </div>
     </div>
   </div>
@@ -536,7 +546,7 @@ function updateModels(){
   const d=document.createElement('option');d.value='';d.text='Seleccionar…';ms.appendChild(d);
   (MODELS[b]||[]).forEach(m=>{const o=document.createElement('option');o.value=m;o.text=m;ms.appendChild(o);});
 }
-function submitQuote(){
+function buildMessageParts(){
   const brand=document.getElementById('sel-brand');
   const year=document.getElementById('sel-year');
   const model=document.getElementById('sel-model');
@@ -545,14 +555,85 @@ function submitQuote(){
   const vin=document.getElementById('inp-vin');
   let ok=true;
   [brand,year,model,part].forEach(el=>{el.classList.remove('err');if(!el.value.trim()){el.classList.add('err');ok=false;}});
-  if(!ok)return;
+  if(!ok)return null;
   const bT=brand.options[brand.selectedIndex].text;
   const mT=model.options[model.selectedIndex].text;
   const eT=engine.value?` · ${engine.options[engine.selectedIndex].text}`:'';
   const vT=vin.value?`\nVIN: ${vin.value}`:'';
-  const msg=`Hola EuroSource 👋\n\nNecesito cotización para:\n*${year.value} ${bT} ${mT}${eT}*${vT}\n\nPieza: ${part.value.trim()}\n\n¿Me pueden ayudar con precio y plazo de entrega?`;
+  return {
+    vehicle:`${year.value} ${bT} ${mT}${eT}`,
+    vinLine:vT,
+    part:part.value.trim()
+  };
+}
+function submitQuote(){
+  const data=buildMessageParts();
+  if(!data)return;
+  const msg=`Hola EuroSource 👋\n\nNecesito cotización para:\n*${data.vehicle}*${data.vinLine}\n\nPieza: ${data.part}\n\n¿Me pueden ayudar con precio y plazo de entrega?`;
   window.open(`https://wa.me/50600000000?text=${encodeURIComponent(msg)}`,'_blank');
 }
+document.getElementById('email-quote').addEventListener('click',async function(){
+  const emailWrap=document.getElementById('email-field-wrap');
+  const emailInput=document.getElementById('inp-email');
+  const status=document.getElementById('email-status');
+  const label=document.getElementById('email-quote-label');
+
+  // Step 1: reveal email field if not yet shown
+  if(emailWrap.style.display==='none'){
+    const data=buildMessageParts();
+    if(!data)return;
+    emailWrap.style.display='flex';
+    emailInput.focus();
+    label.textContent='Confirmar y enviar';
+    return;
+  }
+
+  // Step 2: validate email + form, then submit
+  const data=buildMessageParts();
+  if(!data)return;
+  emailInput.classList.remove('err');
+  if(!emailInput.value.trim() || !emailInput.value.includes('@')){
+    emailInput.classList.add('err');
+    return;
+  }
+
+  const btn=this;
+  btn.disabled=true;
+  label.textContent='Enviando…';
+  status.style.display='none';
+
+  try{
+    const res=await fetch('https://api.web3forms.com/submit',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({
+        access_key:'8d25a3ba-6399-4d35-851d-599a125da716',
+        subject:`Cotización - ${data.vehicle}`,
+        from_name:'EuroSource CR - Formulario',
+        email:emailInput.value.trim(),
+        vehiculo:data.vehicle,
+        vin:data.vinLine?data.vinLine.replace('\nVIN: ',''):'No proporcionado',
+        pieza:data.part,
+        message:`Nueva solicitud de cotización:\n\nVehículo: ${data.vehicle}${data.vinLine}\nPieza: ${data.part}\nCorreo del cliente: ${emailInput.value.trim()}`
+      })
+    });
+    const json=await res.json();
+    if(json.success){
+      status.textContent='✓ Enviado. Te responderemos en menos de 24 h.';
+      status.style.color='#15803d';
+      status.style.display='block';
+      label.textContent='Enviado';
+    }else{
+      throw new Error('fail');
+    }
+  }catch(err){
+    status.textContent='Hubo un error. Intentá por WhatsApp.';
+    status.style.color='var(--accent)';
+    status.style.display='block';
+    label.textContent='Confirmar y enviar';
+    btn.disabled=false;
+  }
+});
 document.querySelectorAll('select,input').forEach(el=>el.addEventListener('input',()=>el.classList.remove('err')));
 </script>
 </body>
