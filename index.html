@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EuroSource CR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --navy:#0f1923;
+  --navy-2:#19283a;
+  --accent:#c0392b;
+  --accent-hover:#a93226;
+  --white:#ffffff;
+  --off:#f7f8f9;
+  --border:#e2e6ea;
+  --border-mid:#c8cdd3;
+  --text:#111820;
+  --muted:#6b7785;
+  --subtle:#9aa3ad;
+  --ff:'DM Sans',sans-serif;
+  --fd:'DM Serif Display',serif;
+  --fm:'DM Mono',monospace;
+}
+
+html{scroll-behavior:smooth}
+body{font-family:var(--ff);background:var(--white);color:var(--text);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* ─── HEADER ─── */
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,0.9);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.hdr{max-width:1080px;margin:0 auto;padding:0 32px;height:60px;display:flex;align-items:center;gap:32px}
+
+.logo{display:flex;align-items:baseline;gap:2px;text-decoration:none}
+.logo-es{font-family:var(--fd);font-size:20px;color:var(--navy);letter-spacing:-.01em}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);margin:0 1px 1px;flex-shrink:0;align-self:center}
+
+nav{display:flex;gap:0;margin-left:8px}
+nav a{font-size:13px;font-weight:400;color:var(--muted);text-decoration:none;padding:6px 14px;border-radius:6px;transition:color .15s,background .15s;letter-spacing:.01em}
+nav a:hover{color:var(--text);background:var(--off)}
+.nav-orders{margin-left:auto;font-size:13px;font-weight:500;color:var(--text);text-decoration:none;padding:8px 16px;border-radius:8px;background:var(--off);cursor:pointer;transition:background .15s;letter-spacing:.01em}
+.nav-orders:hover{background:var(--border)}
+
+.hdr-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.btn-wa-sm{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--text);text-decoration:none;padding:7px 14px;border:1px solid var(--border-mid);border-radius:8px;transition:border-color .15s,background .15s;letter-spacing:.01em}
+.btn-wa-sm:hover{border-color:var(--text);background:var(--off)}
+.wa-badge{width:8px;height:8px;border-radius:50%;background:#25D366;flex-shrink:0}
+
+/* ─── HERO ─── */
+.hero{
+  max-width:1080px;margin:0 auto;
+  padding:96px 32px 80px;
+  display:grid;grid-template-columns:1fr 400px;gap:80px;align-items:start;
+}
+
+.hero-copy{}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:28px;font-family:var(--fm);
+}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--border-mid)}
+
+.hero h1{
+  font-family:var(--fd);
+  font-size:clamp(38px,4.5vw,58px);
+  font-weight:400;
+  line-height:1.08;
+  letter-spacing:-.02em;
+  color:var(--navy);
+  margin-bottom:24px;
+}
+.hero h1 i{font-style:italic;color:var(--accent)}
+
+.hero-body{
+  font-size:16px;color:var(--muted);line-height:1.75;
+  max-width:400px;margin-bottom:36px;font-weight:300;
+}
+
+.hero-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.btn-main{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--navy);color:var(--white);
+  font-family:var(--ff);font-size:14px;font-weight:500;
+  padding:12px 24px;border-radius:8px;border:none;cursor:pointer;
+  text-decoration:none;letter-spacing:.01em;
+  transition:background .15s,transform .1s;
+}
+.btn-main:hover{background:var(--navy-2)}
+.btn-main:active{transform:scale(.98)}
+.btn-link{
+  font-size:13px;font-weight:500;color:var(--muted);
+  text-decoration:none;letter-spacing:.01em;
+  padding:12px 4px;border-bottom:1px solid transparent;
+  transition:color .15s,border-color .15s;
+}
+.btn-link:hover{color:var(--text);border-bottom-color:var(--border-mid)}
+
+.brand-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:48px}
+.brand-chip{
+  font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--subtle);border:1px solid var(--border);
+  padding:4px 10px;border-radius:20px;font-family:var(--fm);
+}
+
+/* ─── QUOTE CARD ─── */
+.quote-card{
+  background:var(--off);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:32px 28px;
+  position:sticky;top:80px;
+}
+.qc-label{
+  font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--subtle);font-family:var(--fm);margin-bottom:6px;
+}
+.qc-title{
+  font-family:var(--fd);font-size:22px;color:var(--navy);
+  letter-spacing:-.01em;margin-bottom:4px;line-height:1.2;
+}
+.qc-sub{font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.5}
+
+.f-group{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
+.f-group label{font-size:11px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-family:var(--fm)}
+.sw{position:relative}
+.sw::after{content:'';position:absolute;right:12px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid var(--subtle);pointer-events:none}
+.sw select,.f-group input{
+  width:100%;height:40px;padding:0 12px;
+  font-family:var(--ff);font-size:13px;
+  border:1px solid var(--border-mid);border-radius:8px;
+  background:var(--white);color:var(--text);
+  appearance:none;-webkit-appearance:none;outline:none;
+  transition:border-color .15s,box-shadow .15s;
+}
+.sw select{padding-right:28px}
+.sw select:focus,.f-group input:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(15,25,35,.08)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.f-note{font-size:10px;color:var(--subtle);margin-top:3px;font-family:var(--fm)}
+.f-group input.err,.sw select.err{border-color:var(--accent)}
+
+.qc-submit{margin-top:16px}
+.btn-submit{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
+  background:var(--navy);color:var(--white);
+  font-family:var(--ff);font-size:14px;font-weight:500;
+  height:44px;border-radius:8px;border:none;cursor:pointer;
+  letter-spacing:.01em;transition:background .15s,transform .1s;
+}
+.btn-submit:hover{background:var(--navy-2)}
+.btn-submit:active{transform:scale(.98)}
+.qc-or{text-align:center;font-size:11px;color:var(--subtle);margin:12px 0;position:relative}
+.qc-or::before,.qc-or::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:var(--border)}
+.qc-or::before{left:0}.qc-or::after{right:0}
+.btn-wa-qc{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
+  font-size:13px;font-weight:500;color:var(--text);text-decoration:none;
+  height:40px;border:1px solid var(--border-mid);border-radius:8px;
+  background:var(--white);transition:border-color .15s,background .15s;
+}
+.btn-wa-qc:hover{border-color:#25D366;background:#f0fdf4;color:#15803d}
+
+/* ─── DIVIDER ─── */
+.full-divider{border:none;border-top:1px solid var(--border);margin:0}
+
+/* ─── HOW IT WORKS ─── */
+.section{max-width:1080px;margin:0 auto;padding:80px 32px}
+.sec-label{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--subtle);font-family:var(--fm);margin-bottom:12px}
+.sec-title{font-family:var(--fd);font-size:clamp(26px,3vw,38px);color:var(--navy);letter-spacing:-.02em;font-weight:400;margin-bottom:56px;line-height:1.15}
+
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+.step-n{font-family:var(--fm);font-size:11px;font-weight:500;color:var(--subtle);letter-spacing:.08em;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.step-n::after{content:'';flex:1;height:1px;background:var(--border)}
+.step h3{font-family:var(--fd);font-size:17px;color:var(--navy);letter-spacing:-.01em;font-weight:400;margin-bottom:8px;line-height:1.3}
+.step p{font-size:13px;color:var(--muted);line-height:1.65}
+
+/* ─── CATALOG PLACEHOLDER ─── */
+.catalog-section{background:var(--off);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.catalog-inner{max-width:1080px;margin:0 auto;padding:80px 32px}
+.catalog-placeholder{
+  border:1.5px dashed var(--border-mid);
+  border-radius:16px;padding:64px 32px;
+  text-align:center;
+}
+.cat-icon{width:48px;height:48px;background:var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.catalog-placeholder h3{font-family:var(--fd);font-size:22px;color:var(--navy);letter-spacing:-.01em;font-weight:400;margin-bottom:8px}
+.catalog-placeholder p{font-size:14px;color:var(--muted);max-width:360px;margin:0 auto;line-height:1.65}
+.cat-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--subtle);background:var(--border);padding:5px 12px;border-radius:20px;margin-bottom:20px;font-family:var(--fm)}
+
+/* ─── SPECIALTIES ─── */
+.specs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:40px}
+.spec-item{background:var(--white);padding:28px 24px}
+.spec-item:hover{background:var(--off)}
+.spec-num{font-family:var(--fm);font-size:10px;color:var(--subtle);letter-spacing:.08em;margin-bottom:10px}
+.spec-item h3{font-family:var(--fd);font-size:16px;color:var(--navy);font-weight:400;letter-spacing:-.01em;margin-bottom:6px}
+.spec-item p{font-size:12px;color:var(--muted);line-height:1.6}
+
+/* ─── FOOTER ─── */
+footer{background:var(--navy);padding:56px 32px 32px}
+.foot-inner{max-width:1080px;margin:0 auto}
+.foot-top{display:flex;align-items:flex-start;justify-content:space-between;gap:48px;margin-bottom:48px;flex-wrap:wrap}
+.foot-logo{display:flex;align-items:baseline;gap:2px;text-decoration:none;margin-bottom:12px}
+.foot-logo .logo-es{color:var(--white)}
+.foot-tagline{font-size:13px;color:rgba(255,255,255,.4);line-height:1.65;max-width:220px}
+.foot-col h4{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);font-family:var(--fm);margin-bottom:16px}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.foot-col ul li a{font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;transition:color .15s}
+.foot-col ul li a:hover{color:var(--white)}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.foot-bottom p{font-size:12px;color:rgba(255,255,255,.3)}
+
+/* ─── MOBILE ─── */
+.mob-cta{display:none;position:fixed;bottom:0;left:0;right:0;padding:12px 16px;background:var(--white);border-top:1px solid var(--border);z-index:200;gap:8px}
+@media(max-width:768px){
+  .mob-cta{display:flex}
+  .mob-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;font-weight:500;padding:12px;border-radius:8px;text-decoration:none;letter-spacing:.01em}
+  .mob-cta .mc-q{background:var(--navy);color:var(--white)}
+  .mob-cta .mc-w{background:#25D366;color:#fff}
+  nav{display:none}
+  .hero{grid-template-columns:1fr;padding:56px 20px 48px;gap:48px}
+  .quote-card{position:static}
+  .steps{grid-template-columns:1fr 1fr;gap:32px}
+  .specs-grid{grid-template-columns:1fr}
+  .section{padding:56px 20px}
+  .catalog-inner{padding:56px 20px}
+  .foot-top{flex-direction:column;gap:32px}
+  body{padding-bottom:72px}
+  .hdr{padding:0 20px}
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.hero-copy > *{animation:up .55s ease both}
+.eyebrow{animation-delay:.05s}
+.hero h1{animation-delay:.12s}
+.hero-body{animation-delay:.2s}
+.hero-actions{animation-delay:.26s}
+.brand-list{animation-delay:.32s}
+.quote-card{animation:up .55s .1s ease both}
+
+/* ─── LOGIN MODAL ─── */
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;z-index:1000}
+.modal-overlay.active{display:flex}
+.modal-box{background:var(--white);border-radius:16px;padding:40px;max-width:420px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);position:relative;max-height:85vh;overflow-y:auto}
+.modal-close{position:absolute;top:12px;right:12px;background:none;border:none;font-size:28px;cursor:pointer;color:var(--muted);width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .15s;padding:0}
+.modal-close:hover{background:var(--off);color:var(--text)}
+.modal-box h2{font-family:var(--fd);font-size:28px;color:var(--navy);margin-bottom:8px;letter-spacing:-.01em}
+.modal-box p{font-size:13px;color:var(--muted);margin-bottom:24px}
+.modal-field{margin-bottom:16px}
+.modal-field label{display:block;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-family:var(--fm)}
+.modal-field input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-family:var(--ff);font-size:14px;outline:none;transition:border-color .15s}
+.modal-field input:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(15,25,35,.08)}
+.modal-btn{width:100%;padding:12px;background:var(--navy);color:var(--white);border:none;border-radius:8px;font-family:var(--ff);font-weight:500;font-size:14px;cursor:pointer;transition:background .15s;letter-spacing:.01em}
+.modal-btn:hover{background:var(--navy-2)}
+.modal-btn:disabled{opacity:0.6;cursor:not-allowed}
+.modal-error{color:var(--accent);font-size:12px;margin-top:8px}
+.modal-success{color:#15803d;font-size:12px;margin-top:8px}
+.modal-legend{background:var(--off);border-left:3px solid var(--accent);padding:12px;border-radius:4px;margin-top:20px;font-size:12px;color:var(--muted);line-height:1.5}
+
+/* ─── ORDERS DASHBOARD ─── */
+.orders-container{max-width:1080px;margin:0 auto;padding:40px 32px}
+.orders-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}
+.orders-header h1{font-family:var(--fd);font-size:32px;color:var(--navy);letter-spacing:-.01em}
+.btn-logout{padding:8px 16px;background:var(--off);color:var(--text);border:none;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;letter-spacing:.01em;transition:background .15s}
+.btn-logout:hover{background:var(--border)}
+.orders-email{font-size:13px;color:var(--muted)}
+.orders-grid{display:grid;gap:16px}
+.order-card{border:1px solid var(--border);border-radius:12px;padding:20px;background:var(--off)}
+.order-card h3{font-family:var(--fd);font-size:18px;color:var(--navy);margin-bottom:12px;letter-spacing:-.01em}
+.order-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px;font-size:13px}
+.order-row:last-child{margin-bottom:0}
+.order-label{color:var(--muted);font-weight:500}
+.order-value{color:var(--text);font-weight:400}
+.status-badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-family:var(--fm)}
+.status-pendiente{background:#fef3c7;color:#92400e}
+.status-transito{background:#dbeafe;color:#1e40af}
+.status-entregado{background:#dcfce7;color:#15803d}
+.status-retraso{background:#fee2e2;color:#991b1b}
+.orders-empty{text-align:center;padding:40px;color:var(--muted)}
+.orders-empty p{font-size:14px;line-height:1.6}
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="hdr">
+    <a class="logo" href="#">
+      <span class="logo-es">EuroSource</span>
+      <span class="logo-dot"></span>
+    </a>
+    <nav>
+      <a href="#proceso">Proceso</a>
+      <a href="#especialidades">Especialidades</a>
+    </nav>
+    <div class="hdr-right">
+      <button class="nav-orders" onclick="showLoginModal()">Mis Órdenes</button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<main>
+<section>
+  <div class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Costa Rica · Bajo Pedido</p>
+      <h1>Repuestos europeos.<br/><i>Sin complicaciones.</i></h1>
+      <p class="hero-body">Identificamos la pieza exacta para tu vehículo, la sourcing desde EE.UU. con las marcas correctas, y la importamos directamente a Costa Rica.</p>
+      <div class="hero-actions">
+        <button class="btn-main" onclick="document.getElementById('qform').scrollIntoView({behavior:'smooth'})">
+          Solicitar cotización
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <a class="btn-link" href="#proceso">Ver cómo funciona</a>
+      </div>
+      <div class="brand-list">
+        <span class="brand-chip">Audi</span>
+        <span class="brand-chip">Volkswagen</span>
+        <span class="brand-chip">BMW</span>
+        <span class="brand-chip">Mercedes-Benz</span>
+        <span class="brand-chip">Volvo</span>
+      </div>
+    </div>
+
+    <!-- QUOTE FORM -->
+    <div class="quote-card" id="qform">
+      <p class="qc-label">Cotización</p>
+      <p class="qc-title">¿Qué pieza necesitás?</p>
+      <p class="qc-sub">Completá los datos y te respondemos en menos de 24 h.</p>
+
+      <div class="g2">
+        <div class="f-group">
+          <label>Marca</label>
+          <div class="sw">
+            <select id="sel-brand" onchange="updateModels()">
+              <option value="">Seleccionar…</option>
+              <option value="audi">Audi</option>
+              <option value="vw">Volkswagen</option>
+              <option value="bmw">BMW</option>
+              <option value="mercedes">Mercedes-Benz</option>
+              <option value="volvo">Volvo</option>
+            </select>
+          </div>
+        </div>
+        <div class="f-group">
+          <label>Año</label>
+          <div class="sw">
+            <select id="sel-year"><option value="">Año…</option></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="f-group">
+          <label>Modelo</label>
+          <div class="sw">
+            <select id="sel-model"><option value="">Marca primero</option></select>
+          </div>
+        </div>
+        <div class="f-group">
+          <label>Motor</label>
+          <div class="sw">
+            <select id="sel-engine">
+              <option value="">Opcional…</option>
+              <option>1.4T TSI</option>
+              <option>1.8T TSI</option>
+              <option>2.0T TSI / TFSI</option>
+              <option>2.0 TDI</option>
+              <option>3.0T / Biturbo</option>
+              <option>Otro</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="f-group">
+        <label>VIN <span style="font-weight:400;color:var(--subtle)">(opcional)</span></label>
+        <input type="text" id="inp-vin" placeholder="WBA3A5C5XDF…" maxlength="17" style="font-family:var(--fm);letter-spacing:.06em;text-transform:uppercase" oninput="this.value=this.value.toUpperCase()"/>
+        <p class="f-note">Garantiza que identifiquemos la revisión exacta</p>
+      </div>
+
+      <div class="f-group">
+        <label>Pieza necesaria</label>
+        <input type="text" id="inp-part" placeholder="Ej: bobinas, bomba de agua, bujías…"/>
+      </div>
+
+      <div class="f-group">
+        <label>Tu correo</label>
+        <input type="email" id="inp-email" placeholder="tu@correo.com"/>
+      </div>
+
+      <div class="qc-submit">
+        <button class="btn-submit" onclick="submitEmail()" style="width:100%;justify-content:center">
+          Enviar
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </button>
+        <p id="email-status" style="font-size:12px;text-align:center;margin-top:8px;color:var(--muted);display:none"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider"/>
+
+<!-- HOW IT WORKS -->
+<section id="proceso">
+  <div class="section">
+    <p class="sec-label">El proceso</p>
+    <p class="sec-title">Simple, sin sorpresas.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <h3>Enviás la consulta</h3>
+        <p>Marca, modelo, año y la pieza. El VIN nos permite identificar la revisión exacta y evitar errores.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <h3>Recibís la cotización</h3>
+        <p>En menos de 24 horas te enviamos precio, marca recomendada, y tiempo de entrega estimado.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <h3>Confirmás y prepagás</h3>
+        <p>Una vez aceptada la cotización, realizás el pago y ordenamos la pieza directamente.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <h3>Recibís la pieza</h3>
+        <p>Importamos y entregamos en Costa Rica. Te mantenemos informado en cada paso del proceso.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider"/>
+
+<!-- SPECIALTIES -->
+<section id="especialidades">
+  <div class="section">
+    <p class="sec-label">Especialidades</p>
+    <div class="specs-grid">
+      <div class="spec-item">
+        <p class="spec-num">01</p>
+        <h3>Motor & Fuerza</h3>
+        <p>Bobinas, bujías, bombas de agua, PCV, correas y cadenas de distribución.</p>
+      </div>
+      <div class="spec-item">
+        <p class="spec-num">02</p>
+        <h3>Transmisión</h3>
+        <p>Kits de ATF para cajas ZF 8HP y DSG/S-tronic. Filtros y componentes OE.</p>
+      </div>
+      <div class="spec-item">
+        <p class="spec-num">03</p>
+        <h3>Suspensión</h3>
+        <p>Bujes, amortiguadores, rótulas, cojinetes de rueda y barra estabilizadora.</p>
+      </div>
+      <div class="spec-item">
+        <p class="spec-num">04</p>
+        <h3>Refrigeración</h3>
+        <p>Termostatos, mangueras, radiadores y bombas de refrigerante originales.</p>
+      </div>
+      <div class="spec-item">
+        <p class="spec-num">05</p>
+        <h3>Frenos</h3>
+        <p>Pastillas, discos, sensores de desgaste y kits de reparación completos.</p>
+      </div>
+      <div class="spec-item">
+        <p class="spec-num">06</p>
+        <h3>Eléctrico & Sensores</h3>
+        <p>Sensores MAF, O2, temperatura, alternadores y módulos de control.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-top">
+      <div>
+        <a class="foot-logo" href="#">
+          <span class="logo-es">EuroSource</span>
+          <span class="logo-dot"></span>
+        </a>
+        <p class="foot-tagline">Repuestos europeos importados bajo pedido. Costa Rica.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Marcas</h4>
+        <ul>
+          <li><a href="#">Audi</a></li>
+          <li><a href="#">Volkswagen</a></li>
+          <li><a href="#">BMW</a></li>
+          <li><a href="#">Mercedes-Benz</a></li>
+          <li><a href="#">Volvo</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Especialidades</h4>
+        <ul>
+          <li><a href="#">Motor & Fuerza</a></li>
+          <li><a href="#">Transmisión</a></li>
+          <li><a href="#">Suspensión</a></li>
+          <li><a href="#">Frenos</a></li>
+          <li><a href="#">Eléctrico</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="https://wa.me/50600000000" target="_blank">WhatsApp</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2025 EuroSource CR · San José, Costa Rica</p>
+      <p>Repuestos importados bajo pedido · No somos distribuidores oficiales</p>
+    </div>
+  </div>
+</footer>
+
+<!-- MOBILE STICKY CTA -->
+<div class="mob-cta">
+  <a class="mc-q" href="#qform" onclick="event.preventDefault();document.getElementById('qform').scrollIntoView({behavior:'smooth'})">Cotizar</a>
+  <a class="mc-w" href="https://wa.me/50600000000" target="_blank">WhatsApp</a>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeLoginModal()">✕</button>
+    <h2>Mis Órdenes</h2>
+    <p>Inicia sesión para ver tus pedidos</p>
+    
+    <div id="loginForm">
+      <div class="modal-field">
+        <label>Correo</label>
+        <input type="email" id="loginEmail" placeholder="tu@correo.com"/>
+      </div>
+      <div class="modal-field">
+        <label>Contraseña</label>
+        <input type="password" id="loginPassword" placeholder="••••••••"/>
+      </div>
+      <button class="modal-btn" onclick="handleLogin()">Ingresar</button>
+      <div id="loginError" class="modal-error"></div>
+      
+      <div class="modal-legend">
+        <strong style="color:var(--text)">¿No tenés cuenta?</strong><br>
+        <button style="background:none;border:none;color:var(--navy);text-decoration:underline;cursor:pointer;font-weight:500;padding:0;font-family:var(--ff);font-size:12px;margin-top:4px" onclick="showSignupForm()">Crear una aquí</button>
+      </div>
+    </div>
+
+    <div id="signupForm" style="display:none">
+      <h2>Crear Cuenta</h2>
+      <p>Te enviaremos un correo de verificación</p>
+      
+      <div class="modal-field">
+        <label>Correo</label>
+        <input type="email" id="signupEmail" placeholder="tu@correo.com"/>
+      </div>
+      <div class="modal-field">
+        <label>Contraseña</label>
+        <input type="password" id="signupPassword" placeholder="••••••••"/>
+      </div>
+      <div class="modal-field">
+        <label>Confirmar Contraseña</label>
+        <input type="password" id="signupPasswordConfirm" placeholder="••••••••"/>
+      </div>
+      <button class="modal-btn" onclick="handleSignup()">Crear Cuenta</button>
+      <div id="signupError" class="modal-error"></div>
+      <div id="signupSuccess" class="modal-success"></div>
+      <button class="modal-btn" style="background:var(--off);color:var(--text);margin-top:8px" onclick="showLoginForm()">Volver al login</button>
+    </div>
+
+    <div id="ordersView" style="display:none">
+      <div class="orders-header">
+        <div>
+          <h1 style="font-size:20px;margin-bottom:4px">Mis Órdenes</h1>
+          <p class="orders-email" id="userEmail"></p>
+        </div>
+        <button class="btn-logout" onclick="handleLogout()">Cerrar sesión</button>
+      </div>
+      <div class="orders-grid" id="ordersGrid">
+        <p class="orders-empty">Cargando...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── SUPABASE SETUP ───
+const SUPABASE_URL = 'https://ygakabwmufnyavzhkbal.supabase.co';
+const SUPABASE_KEY = 'rLcGb8QHvSYmEBCprMbcIA_C2ZrUDTB';
+
+// ─── LOGIN FUNCTIONS ───
+function showLoginModal() {
+  document.getElementById('loginModal').classList.add('active');
+  showLoginForm();
+}
+
+function closeLoginModal() {
+  document.getElementById('loginModal').classList.remove('active');
+  document.getElementById('loginEmail').value = '';
+  document.getElementById('loginPassword').value = '';
+  document.getElementById('loginError').textContent = '';
+  document.getElementById('signupEmail').value = '';
+  document.getElementById('signupPassword').value = '';
+  document.getElementById('signupPasswordConfirm').value = '';
+  document.getElementById('signupError').textContent = '';
+  document.getElementById('signupSuccess').textContent = '';
+  showLoginForm();
+}
+
+function showLoginForm() {
+  document.getElementById('loginForm').style.display = 'block';
+  document.getElementById('signupForm').style.display = 'none';
+}
+
+function showSignupForm() {
+  document.getElementById('loginForm').style.display = 'none';
+  document.getElementById('signupForm').style.display = 'block';
+  document.getElementById('signupError').textContent = '';
+  document.getElementById('signupSuccess').textContent = '';
+}
+
+async function handleSignup() {
+  const email = document.getElementById('signupEmail').value.trim();
+  const password = document.getElementById('signupPassword').value;
+  const passwordConfirm = document.getElementById('signupPasswordConfirm').value;
+  const errorEl = document.getElementById('signupError');
+  const successEl = document.getElementById('signupSuccess');
+  errorEl.textContent = '';
+  successEl.textContent = '';
+
+  if (!email || !password || !passwordConfirm) {
+    errorEl.textContent = 'Por favor completa todos los campos';
+    return;
+  }
+
+  if (password.length < 6) {
+    errorEl.textContent = 'La contraseña debe tener al menos 6 caracteres';
+    return;
+  }
+
+  if (password !== passwordConfirm) {
+    errorEl.textContent = 'Las contraseñas no coinciden';
+    return;
+  }
+
+  try {
+    const { data, error } = await window.supabaseClient.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: window.location.origin
+      }
+    });
+
+    if (error) {
+      errorEl.textContent = error.message;
+      return;
+    }
+
+    successEl.textContent = '✓ Cuenta creada. Verifica tu correo para confirmar.';
+    setTimeout(() => {
+      showLoginForm();
+      document.getElementById('loginEmail').value = email;
+    }, 2000);
+  } catch (err) {
+    errorEl.textContent = 'Error al crear la cuenta';
+  }
+}
+
+async function handleLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const errorEl = document.getElementById('loginError');
+  errorEl.textContent = '';
+
+  if (!email || !password) {
+    errorEl.textContent = 'Por favor completa todos los campos';
+    return;
+  }
+
+  try {
+    const { data, error } = await window.supabaseClient.auth.signInWithPassword({ email, password });
+    if (error) {
+      errorEl.textContent = error.message === 'Invalid login credentials' ? 'Correo o contraseña incorrectos' : error.message;
+      return;
+    }
+    
+    // Show orders
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('ordersView').style.display = 'block';
+    document.getElementById('userEmail').textContent = email;
+    loadOrders();
+  } catch (err) {
+    errorEl.textContent = 'Error al iniciar sesión';
+  }
+}
+
+async function loadOrders() {
+  const { data: { user } } = await window.supabaseClient.auth.getUser();
+  if (!user) return;
+
+  const { data: customers } = await window.supabaseClient
+    .from('customers')
+    .select('id')
+    .eq('email', user.email)
+    .single();
+
+  if (!customers) {
+    document.getElementById('ordersGrid').innerHTML = '<p class="orders-empty"><p>No hay órdenes aún</p></p>';
+    return;
+  }
+
+  const { data: orders, error } = await window.supabaseClient
+    .from('orders')
+    .select('*')
+    .eq('customer_id', customers.id)
+    .order('created_at', { ascending: false });
+
+  if (error || !orders || orders.length === 0) {
+    document.getElementById('ordersGrid').innerHTML = '<p class="orders-empty"><p>No hay órdenes aún</p></p>';
+    return;
+  }
+
+  const statusMap = {
+    'pendiente': 'Pendiente',
+    'en tránsito': 'En Tránsito',
+    'entregado': 'Entregado',
+    'retraso': 'Con Retraso'
+  };
+
+  const html = orders.map(order => `
+    <div class="order-card">
+      <h3>Orden ${order.id.slice(0, 8)}</h3>
+      <div class="order-row">
+        <div><span class="order-label">Pieza</span></div>
+        <div><span class="order-value">${order.nombre_parte}</span></div>
+      </div>
+      <div class="order-row">
+        <div><span class="order-label">Número</span></div>
+        <div><span class="order-value">${order.numero_parte}</span></div>
+      </div>
+      <div class="order-row">
+        <div><span class="order-label">Precio</span></div>
+        <div><span class="order-value">$${parseFloat(order.precio_total).toFixed(2)}</span></div>
+      </div>
+      <div class="order-row">
+        <div><span class="order-label">Estado</span></div>
+        <div><span class="status-badge status-${order.estado_envio}">${statusMap[order.estado_envio] || order.estado_envio}</span></div>
+      </div>
+      ${order.notas ? `<div class="order-row"><div><span class="order-label">Notas</span></div><div><span class="order-value">${order.notas}</span></div></div>` : ''}
+    </div>
+  `).join('');
+
+  document.getElementById('ordersGrid').innerHTML = html;
+}
+
+async function handleLogout() {
+  await window.supabaseClient.auth.signOut();
+  document.getElementById('loginForm').style.display = 'block';
+  document.getElementById('ordersView').style.display = 'none';
+  document.getElementById('loginEmail').value = '';
+  document.getElementById('loginPassword').value = '';
+}
+
+// ─── QUOTATION FORM ───
+const MODELS={
+  audi:['A1','A3','A4','A5','A6','A7','A8','Q2','Q3','Q5','Q7','Q8','TT','RS3','RS4','RS5','S3','S4','S5'],
+  vw:['Golf','Golf GTI','Golf R','Jetta','Passat','Tiguan','Touareg','Polo','Arteon','Touran'],
+  bmw:['Serie 1','Serie 2','Serie 3','Serie 4','Serie 5','Serie 7','X1','X2','X3','X4','X5','X6','M2','M3','M4','M5'],
+  mercedes:['Clase A','Clase B','Clase C','Clase E','Clase S','GLA','GLC','GLE','GLS','CLA','CLS','AMG C63','AMG E63'],
+  volvo:['S60','S90','V40','V60','V90','XC40','XC60','XC90']
+};
+const ys=document.getElementById('sel-year');
+for(let y=2025;y>=1998;y--){const o=document.createElement('option');o.value=y;o.text=y;ys.appendChild(o);}
+function updateModels(){
+  const b=document.getElementById('sel-brand').value;
+  const ms=document.getElementById('sel-model');
+  ms.innerHTML='';
+  if(!b){ms.innerHTML='<option value="">Marca primero</option>';return;}
+  const d=document.createElement('option');d.value='';d.text='Seleccionar…';ms.appendChild(d);
+  (MODELS[b]||[]).forEach(m=>{const o=document.createElement('option');o.value=m;o.text=m;ms.appendChild(o);});
+}
+function buildMessageParts(){
+  const brand=document.getElementById('sel-brand');
+  const year=document.getElementById('sel-year');
+  const model=document.getElementById('sel-model');
+  const part=document.getElementById('inp-part');
+  const engine=document.getElementById('sel-engine');
+  const vin=document.getElementById('inp-vin');
+  let ok=true;
+  [brand,year,model,part].forEach(el=>{el.classList.remove('err');if(!el.value.trim()){el.classList.add('err');ok=false;}});
+  if(!ok)return null;
+  const bT=brand.options[brand.selectedIndex].text;
+  const mT=model.options[model.selectedIndex].text;
+  const eT=engine.value?` · ${engine.options[engine.selectedIndex].text}`:'';
+  const vT=vin.value?`\nVIN: ${vin.value}`:'';
+  return {
+    vehicle:`${year.value} ${bT} ${mT}${eT}`,
+    vinLine:vT,
+    part:part.value.trim()
+  };
+}
+async function submitEmail(){
+  const data=buildMessageParts();
+  if(!data)return;
+  const emailInput=document.getElementById('inp-email');
+  const status=document.getElementById('email-status');
+  const btn=document.querySelector('.btn-submit');
+  
+  emailInput.classList.remove('err');
+  if(!emailInput.value.trim() || !emailInput.value.includes('@')){
+    emailInput.classList.add('err');
+    return;
+  }
+
+  btn.disabled=true;
+  const oldText=btn.textContent;
+  btn.textContent='Enviando…';
+  status.style.display='none';
+
+  try{
+    const res=await fetch('https://api.web3forms.com/submit',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({
+        access_key:'8d25a3ba-6399-4d35-851d-599a125da716',
+        subject:`Cotización - ${data.vehicle}`,
+        from_name:'EuroSource - Formulario',
+        email:emailInput.value.trim(),
+        vehiculo:data.vehicle,
+        vin:data.vinLine?data.vinLine.replace('\nVIN: ',''):'No proporcionado',
+        pieza:data.part,
+        message:`Nueva solicitud de cotización:\n\nVehículo: ${data.vehicle}${data.vinLine}\nPieza: ${data.part}\nCorreo del cliente: ${emailInput.value.trim()}`
+      })
+    });
+    const json=await res.json();
+    if(json.success){
+      status.textContent='✓ Enviado. Te responderemos en menos de 24 h.';
+      status.style.color='#15803d';
+      status.style.display='block';
+      btn.textContent='Enviado';
+    }else{
+      throw new Error('fail');
+    }
+  }catch(err){
+    status.textContent='Hubo un error. Intentá más tarde.';
+    status.style.color='var(--accent)';
+    status.style.display='block';
+    btn.disabled=false;
+    btn.textContent=oldText;
+  }
+}
+document.querySelectorAll('select,input').forEach(el=>el.addEventListener('input',()=>el.classList.remove('err')));
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// Initialize Supabase after library loads
+function initSupabase() {
+  if (!window.supabase) {
+    setTimeout(initSupabase, 100);
+    return;
+  }
+  const SUPABASE_URL = 'https://ygakabwmufnyavzhkbal.supabase.co';
+  const SUPABASE_KEY = 'rLcGb8QHvSYmEBCprMbcIA_C2ZrUDTB';
+  window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+}
+initSupabase();
+</script>
+</body>
+</html>
