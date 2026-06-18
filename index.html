@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-<script async src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -612,7 +611,6 @@ footer{background:var(--navy);padding:56px 32px 32px}
 // ─── SUPABASE SETUP ───
 const SUPABASE_URL = 'https://ygakabwmufnyavzhkbal.supabase.co';
 const SUPABASE_KEY = 'rLcGb8QHvSYmEBCprMbcIA_C2ZrUDTB';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ─── LOGIN FUNCTIONS ───
 function showLoginModal() {
@@ -670,7 +668,7 @@ async function handleSignup() {
   }
 
   try {
-    const { data, error } = await supabase.auth.signUp({
+    const { data, error } = await window.supabaseClient.auth.signUp({
       email,
       password,
       options: {
@@ -705,7 +703,7 @@ async function handleLogin() {
   }
 
   try {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await window.supabaseClient.auth.signInWithPassword({ email, password });
     if (error) {
       errorEl.textContent = error.message === 'Invalid login credentials' ? 'Correo o contraseña incorrectos' : error.message;
       return;
@@ -722,10 +720,10 @@ async function handleLogin() {
 }
 
 async function loadOrders() {
-  const { data: { user } } = await supabase.auth.getUser();
+  const { data: { user } } = await window.supabaseClient.auth.getUser();
   if (!user) return;
 
-  const { data: customers } = await supabase
+  const { data: customers } = await window.supabaseClient
     .from('customers')
     .select('id')
     .eq('email', user.email)
@@ -736,7 +734,7 @@ async function loadOrders() {
     return;
   }
 
-  const { data: orders, error } = await supabase
+  const { data: orders, error } = await window.supabaseClient
     .from('orders')
     .select('*')
     .eq('customer_id', customers.id)
@@ -781,7 +779,7 @@ async function loadOrders() {
 }
 
 async function handleLogout() {
-  await supabase.auth.signOut();
+  await window.supabaseClient.auth.signOut();
   document.getElementById('loginForm').style.display = 'block';
   document.getElementById('ordersView').style.display = 'none';
   document.getElementById('loginEmail').value = '';
@@ -942,6 +940,20 @@ document.querySelectorAll('select,input').forEach(el=>el.addEventListener('input
   }
 });
 document.querySelectorAll('select,input').forEach(el=>el.addEventListener('input',()=>el.classList.remove('err')));
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// Initialize Supabase after library loads
+function initSupabase() {
+  if (!window.supabase) {
+    setTimeout(initSupabase, 100);
+    return;
+  }
+  const SUPABASE_URL = 'https://ygakabwmufnyavzhkbal.supabase.co';
+  const SUPABASE_KEY = 'rLcGb8QHvSYmEBCprMbcIA_C2ZrUDTB';
+  window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+}
+initSupabase();
 </script>
 </body>
 </html>
