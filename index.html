@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<script async src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -47,6 +48,8 @@ header{
 nav{display:flex;gap:0;margin-left:8px}
 nav a{font-size:13px;font-weight:400;color:var(--muted);text-decoration:none;padding:6px 14px;border-radius:6px;transition:color .15s,background .15s;letter-spacing:.01em}
 nav a:hover{color:var(--text);background:var(--off)}
+.nav-orders{margin-left:auto;font-size:13px;font-weight:500;color:var(--text);text-decoration:none;padding:8px 16px;border-radius:8px;background:var(--off);cursor:pointer;transition:background .15s;letter-spacing:.01em}
+.nav-orders:hover{background:var(--border)}
 
 .hdr-right{margin-left:auto;display:flex;align-items:center;gap:10px}
 .btn-wa-sm{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--text);text-decoration:none;padding:7px 14px;border:1px solid var(--border-mid);border-radius:8px;transition:border-color .15s,background .15s;letter-spacing:.01em}
@@ -244,6 +247,46 @@ footer{background:var(--navy);padding:56px 32px 32px}
 .hero-actions{animation-delay:.26s}
 .brand-list{animation-delay:.32s}
 .quote-card{animation:up .55s .1s ease both}
+
+/* ─── LOGIN MODAL ─── */
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;z-index:1000}
+.modal-overlay.active{display:flex}
+.modal-box{background:var(--white);border-radius:16px;padding:40px;max-width:420px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted)}
+.modal-box h2{font-family:var(--fd);font-size:28px;color:var(--navy);margin-bottom:8px;letter-spacing:-.01em}
+.modal-box p{font-size:13px;color:var(--muted);margin-bottom:24px}
+.modal-field{margin-bottom:16px}
+.modal-field label{display:block;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-family:var(--fm)}
+.modal-field input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-family:var(--ff);font-size:14px;outline:none;transition:border-color .15s}
+.modal-field input:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(15,25,35,.08)}
+.modal-btn{width:100%;padding:12px;background:var(--navy);color:var(--white);border:none;border-radius:8px;font-family:var(--ff);font-weight:500;font-size:14px;cursor:pointer;transition:background .15s;letter-spacing:.01em}
+.modal-btn:hover{background:var(--navy-2)}
+.modal-btn:disabled{opacity:0.6;cursor:not-allowed}
+.modal-error{color:var(--accent);font-size:12px;margin-top:8px}
+.modal-success{color:#15803d;font-size:12px;margin-top:8px}
+
+/* ─── ORDERS DASHBOARD ─── */
+.orders-container{max-width:1080px;margin:0 auto;padding:40px 32px}
+.orders-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}
+.orders-header h1{font-family:var(--fd);font-size:32px;color:var(--navy);letter-spacing:-.01em}
+.btn-logout{padding:8px 16px;background:var(--off);color:var(--text);border:none;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;letter-spacing:.01em;transition:background .15s}
+.btn-logout:hover{background:var(--border)}
+.orders-email{font-size:13px;color:var(--muted)}
+.orders-grid{display:grid;gap:16px}
+.order-card{border:1px solid var(--border);border-radius:12px;padding:20px;background:var(--off)}
+.order-card h3{font-family:var(--fd);font-size:18px;color:var(--navy);margin-bottom:12px;letter-spacing:-.01em}
+.order-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px;font-size:13px}
+.order-row:last-child{margin-bottom:0}
+.order-label{color:var(--muted);font-weight:500}
+.order-value{color:var(--text);font-weight:400}
+.status-badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-family:var(--fm)}
+.status-pendiente{background:#fef3c7;color:#92400e}
+.status-transito{background:#dbeafe;color:#1e40af}
+.status-entregado{background:#dcfce7;color:#15803d}
+.status-retraso{background:#fee2e2;color:#991b1b}
+.orders-empty{text-align:center;padding:40px;color:var(--muted)}
+.orders-empty p{font-size:14px;line-height:1.6}
+
 </style>
 </head>
 <body>
@@ -257,15 +300,10 @@ footer{background:var(--navy);padding:56px 32px 32px}
     </a>
     <nav>
       <a href="#proceso">Proceso</a>
-      <a href="#precio">Tarifa</a>
       <a href="#especialidades">Especialidades</a>
-      <a href="#catalogo">Catálogo</a>
     </nav>
     <div class="hdr-right">
-      <a class="btn-wa-sm" href="https://wa.me/50600000000" target="_blank">
-        <span class="wa-badge"></span>
-        WhatsApp
-      </a>
+      <button class="nav-orders" onclick="showLoginModal()">Mis Órdenes</button>
     </div>
   </div>
 </header>
@@ -275,12 +313,12 @@ footer{background:var(--navy);padding:56px 32px 32px}
 <section>
   <div class="hero">
     <div class="hero-copy">
-      <p class="eyebrow">Costa Rica · Servicio de Sourcing</p>
-      <h1>Encontrá tu repuesto.<br/><i>Nosotros lo identificamos.</i></h1>
-      <p class="hero-body">Identificamos el repuesto exacto para tu vehículo europeo y te conectamos con el proveedor correcto en EE.UU. Vos comprás directamente; nosotros te guiamos en cada paso.</p>
+      <p class="eyebrow">Costa Rica · Bajo Pedido</p>
+      <h1>Repuestos europeos.<br/><i>Sin complicaciones.</i></h1>
+      <p class="hero-body">Identificamos la pieza exacta para tu vehículo, la sourcing desde EE.UU. con las marcas correctas, y la importamos directamente a Costa Rica.</p>
       <div class="hero-actions">
         <button class="btn-main" onclick="document.getElementById('qform').scrollIntoView({behavior:'smooth'})">
-          Solicitar ayuda con mi búsqueda
+          Solicitar cotización
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </button>
         <a class="btn-link" href="#proceso">Ver cómo funciona</a>
@@ -296,9 +334,9 @@ footer{background:var(--navy);padding:56px 32px 32px}
 
     <!-- QUOTE FORM -->
     <div class="quote-card" id="qform">
-      <p class="qc-label">Sourcing</p>
-      <p class="qc-title">¿Qué pieza buscás?</p>
-      <p class="qc-sub">Completá los datos y te ayudamos a identificar la pieza y el proveedor correcto en menos de 24 h.</p>
+      <p class="qc-label">Cotización</p>
+      <p class="qc-title">¿Qué pieza necesitás?</p>
+      <p class="qc-sub">Completá los datos y te respondemos en menos de 24 h.</p>
 
       <div class="g2">
         <div class="f-group">
@@ -356,24 +394,15 @@ footer{background:var(--navy);padding:56px 32px 32px}
         <input type="text" id="inp-part" placeholder="Ej: bobinas, bomba de agua, bujías…"/>
       </div>
 
-      <div class="f-group" id="email-field-wrap" style="display:none">
+      <div class="f-group">
         <label>Tu correo</label>
         <input type="email" id="inp-email" placeholder="tu@correo.com"/>
       </div>
 
       <div class="qc-submit">
-        <button class="btn-submit" onclick="submitQuote()">
-          Enviar por WhatsApp
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.549 4.12 1.512 5.858L0 24l6.342-1.487A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.028-1.382l-.361-.214-3.735.876.933-3.647-.234-.374A9.786 9.786 0 0 1 2.182 12C2.182 6.575 6.575 2.182 12 2.182S21.818 6.575 21.818 12 17.425 21.818 12 21.818z"/></svg>
-        </button>
-        <div class="qc-or">o</div>
-        <a class="btn-wa-qc" href="https://wa.me/50600000000" target="_blank">
-          <span class="wa-badge"></span>
-          Escribinos directamente
-        </a>
-        <button class="btn-wa-qc" id="email-quote" type="button" style="margin-top:8px">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          <span id="email-quote-label">Enviar por correo</span>
+        <button class="btn-submit" onclick="submitEmail()" style="width:100%;justify-content:center">
+          Enviar
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </button>
         <p id="email-status" style="font-size:12px;text-align:center;margin-top:8px;color:var(--muted);display:none"></p>
       </div>
@@ -396,60 +425,18 @@ footer{background:var(--navy);padding:56px 32px 32px}
       </div>
       <div class="step">
         <div class="step-n">02</div>
-        <h3>Identificamos la pieza</h3>
-        <p>En menos de 24 horas te indicamos el número de pieza correcto, el proveedor recomendado en EE.UU., y el costo estimado.</p>
+        <h3>Recibís la cotización</h3>
+        <p>En menos de 24 horas te enviamos precio, marca recomendada, y tiempo de entrega estimado.</p>
       </div>
       <div class="step">
         <div class="step-n">03</div>
-        <h3>Comprás directamente</h3>
-        <p>Realizás la compra directamente con el proveedor en EE.UU. Te acompañamos en el proceso si lo necesitás.</p>
+        <h3>Confirmás y prepagás</h3>
+        <p>Una vez aceptada la cotización, realizás el pago y ordenamos la pieza directamente.</p>
       </div>
       <div class="step">
         <div class="step-n">04</div>
-        <h3>Coordinamos la entrega</h3>
-        <p>Te asesoramos con la logística de envío e importación a Costa Rica para que recibás tu pieza sin contratiempos.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="full-divider"/>
-
-<!-- PRICING -->
-<section id="precio">
-  <div class="section">
-    <p class="sec-label">Cómo cobramos</p>
-    <p class="sec-title">Transparente, sin sorpresas.</p>
-    <div class="specs-grid" style="grid-template-columns:repeat(2,1fr)">
-      <div class="spec-item">
-        <p class="spec-num">Tarifa de servicio</p>
-        <h3>15–20% del costo de la pieza</h3>
-        <p>Cobramos un porcentaje del precio del repuesto por identificarlo, encontrar el proveedor correcto, y acompañarte en la compra e importación. Vos pagás al proveedor directamente — nuestra tarifa se cotiza por separado, antes de que decidas avanzar.</p>
-      </div>
-      <div class="spec-item">
-        <p class="spec-num">Sin compromiso</p>
-        <h3>Cotización sin costo</h3>
-        <p>Identificar la pieza y darte el costo estimado no tiene cargo. Solo pagás la tarifa de servicio si decidís continuar con la compra a través de nuestra guía.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="full-divider"/>
-
-<!-- CATALOG PLACEHOLDER -->
-<section id="catalogo">
-  <div class="catalog-section">
-    <div class="catalog-inner">
-      <p class="sec-label">Catálogo</p>
-      <p class="sec-title">Piezas que sourciamos</p>
-      <div class="catalog-placeholder">
-        <div class="cat-badge">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          Próximamente
-        </div>
-        <h3>Catálogo en construcción</h3>
-        <p>Pronto podrás explorar ejemplos de piezas que identificamos frecuentemente, por marca, modelo y categoría. Por ahora, envianos tu consulta directamente.</p>
+        <h3>Recibís la pieza</h3>
+        <p>Importamos y entregamos en Costa Rica. Te mantenemos informado en cada paso del proceso.</p>
       </div>
     </div>
   </div>
@@ -507,7 +494,7 @@ footer{background:var(--navy);padding:56px 32px 32px}
           <span class="logo-es">EuroSource</span>
           <span class="logo-dot"></span>
         </a>
-        <p class="foot-tagline">Servicio de identificación y sourcing de repuestos europeos. Costa Rica.</p>
+        <p class="foot-tagline">Repuestos europeos importados bajo pedido. Costa Rica.</p>
       </div>
       <div class="foot-col">
         <h4>Marcas</h4>
@@ -540,18 +527,168 @@ footer{background:var(--navy);padding:56px 32px 32px}
     </div>
     <div class="foot-bottom">
       <p>© 2025 EuroSource CR · San José, Costa Rica</p>
-      <p>Servicio de sourcing e identificación · No vendemos ni distribuimos repuestos directamente</p>
+      <p>Repuestos importados bajo pedido · No somos distribuidores oficiales</p>
     </div>
   </div>
 </footer>
 
 <!-- MOBILE STICKY CTA -->
 <div class="mob-cta">
-  <a class="mc-q" href="#qform" onclick="event.preventDefault();document.getElementById('qform').scrollIntoView({behavior:'smooth'})">Sourcing</a>
+  <a class="mc-q" href="#qform" onclick="event.preventDefault();document.getElementById('qform').scrollIntoView({behavior:'smooth'})">Cotizar</a>
   <a class="mc-w" href="https://wa.me/50600000000" target="_blank">WhatsApp</a>
 </div>
 
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeLoginModal()">✕</button>
+    <h2>Mis Órdenes</h2>
+    <p>Inicia sesión para ver tus pedidos</p>
+    
+    <div id="loginForm">
+      <div class="modal-field">
+        <label>Correo</label>
+        <input type="email" id="loginEmail" placeholder="tu@correo.com"/>
+      </div>
+      <div class="modal-field">
+        <label>Contraseña</label>
+        <input type="password" id="loginPassword" placeholder="••••••••"/>
+      </div>
+      <button class="modal-btn" onclick="handleLogin()">Ingresar</button>
+      <div id="loginError" class="modal-error"></div>
+    </div>
+
+    <div id="ordersView" style="display:none">
+      <div class="orders-container">
+        <div class="orders-header">
+          <div>
+            <h1 style="font-size:20px;margin-bottom:4px">Mis Órdenes</h1>
+            <p class="orders-email" id="userEmail"></p>
+          </div>
+          <button class="btn-logout" onclick="handleLogout()">Cerrar sesión</button>
+        </div>
+        <div class="orders-grid" id="ordersGrid">
+          <p class="orders-empty">Cargando...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
+// ─── SUPABASE SETUP ───
+const SUPABASE_URL = 'https://ygakabwmufnyavzhkbal.supabase.co';
+const SUPABASE_KEY = 'rLcGb8QHvSYmEBCprMbcIA_C2ZrUDTB';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ─── LOGIN FUNCTIONS ───
+function showLoginModal() {
+  document.getElementById('loginModal').classList.add('active');
+}
+
+function closeLoginModal() {
+  document.getElementById('loginModal').classList.remove('active');
+  document.getElementById('loginEmail').value = '';
+  document.getElementById('loginPassword').value = '';
+  document.getElementById('loginError').textContent = '';
+}
+
+async function handleLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const errorEl = document.getElementById('loginError');
+  errorEl.textContent = '';
+
+  if (!email || !password) {
+    errorEl.textContent = 'Por favor completa todos los campos';
+    return;
+  }
+
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) {
+      errorEl.textContent = error.message === 'Invalid login credentials' ? 'Correo o contraseña incorrectos' : error.message;
+      return;
+    }
+    
+    // Show orders
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('ordersView').style.display = 'block';
+    document.getElementById('userEmail').textContent = email;
+    loadOrders();
+  } catch (err) {
+    errorEl.textContent = 'Error al iniciar sesión';
+  }
+}
+
+async function loadOrders() {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+
+  const { data: customers } = await supabase
+    .from('customers')
+    .select('id')
+    .eq('email', user.email)
+    .single();
+
+  if (!customers) {
+    document.getElementById('ordersGrid').innerHTML = '<p class="orders-empty"><p>No hay órdenes aún</p></p>';
+    return;
+  }
+
+  const { data: orders, error } = await supabase
+    .from('orders')
+    .select('*')
+    .eq('customer_id', customers.id)
+    .order('created_at', { ascending: false });
+
+  if (error || !orders || orders.length === 0) {
+    document.getElementById('ordersGrid').innerHTML = '<p class="orders-empty"><p>No hay órdenes aún</p></p>';
+    return;
+  }
+
+  const statusMap = {
+    'pendiente': 'Pendiente',
+    'en tránsito': 'En Tránsito',
+    'entregado': 'Entregado',
+    'retraso': 'Con Retraso'
+  };
+
+  const html = orders.map(order => `
+    <div class="order-card">
+      <h3>Orden ${order.id.slice(0, 8)}</h3>
+      <div class="order-row">
+        <div><span class="order-label">Pieza</span></div>
+        <div><span class="order-value">${order.nombre_parte}</span></div>
+      </div>
+      <div class="order-row">
+        <div><span class="order-label">Número</span></div>
+        <div><span class="order-value">${order.numero_parte}</span></div>
+      </div>
+      <div class="order-row">
+        <div><span class="order-label">Precio</span></div>
+        <div><span class="order-value">$${parseFloat(order.precio_total).toFixed(2)}</span></div>
+      </div>
+      <div class="order-row">
+        <div><span class="order-label">Estado</span></div>
+        <div><span class="status-badge status-${order.estado_envio}">${statusMap[order.estado_envio] || order.estado_envio}</span></div>
+      </div>
+      ${order.notas ? `<div class="order-row"><div><span class="order-label">Notas</span></div><div><span class="order-value">${order.notas}</span></div></div>` : ''}
+    </div>
+  `).join('');
+
+  document.getElementById('ordersGrid').innerHTML = html;
+}
+
+async function handleLogout() {
+  await supabase.auth.signOut();
+  document.getElementById('loginForm').style.display = 'block';
+  document.getElementById('ordersView').style.display = 'none';
+  document.getElementById('loginEmail').value = '';
+  document.getElementById('loginPassword').value = '';
+}
+
+// ─── QUOTATION FORM ───
 const MODELS={
   audi:['A1','A3','A4','A5','A6','A7','A8','Q2','Q3','Q5','Q7','Q8','TT','RS3','RS4','RS5','S3','S4','S5'],
   vw:['Golf','Golf GTI','Golf R','Jetta','Passat','Tiguan','Touareg','Polo','Arteon','Touran'],
@@ -589,13 +726,60 @@ function buildMessageParts(){
     part:part.value.trim()
   };
 }
-function submitQuote(){
+async function submitEmail(){
   const data=buildMessageParts();
   if(!data)return;
-  const msg=`Hola EuroSource 👋\n\nQuiero ayuda para identificar esta pieza:\n*${data.vehicle}*${data.vinLine}\n\nPieza: ${data.part}\n\n¿Me pueden ayudar a identificarla y recomendarme un proveedor?`;
-  window.open(`https://wa.me/50600000000?text=${encodeURIComponent(msg)}`,'_blank');
+  const emailInput=document.getElementById('inp-email');
+  const status=document.getElementById('email-status');
+  const btn=document.querySelector('.btn-submit');
+  
+  emailInput.classList.remove('err');
+  if(!emailInput.value.trim() || !emailInput.value.includes('@')){
+    emailInput.classList.add('err');
+    return;
+  }
+
+  btn.disabled=true;
+  const oldText=btn.textContent;
+  btn.textContent='Enviando…';
+  status.style.display='none';
+
+  try{
+    const res=await fetch('https://api.web3forms.com/submit',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({
+        access_key:'8d25a3ba-6399-4d35-851d-599a125da716',
+        subject:`Cotización - ${data.vehicle}`,
+        from_name:'EuroSource - Formulario',
+        email:emailInput.value.trim(),
+        vehiculo:data.vehicle,
+        vin:data.vinLine?data.vinLine.replace('\nVIN: ',''):'No proporcionado',
+        pieza:data.part,
+        message:`Nueva solicitud de cotización:\n\nVehículo: ${data.vehicle}${data.vinLine}\nPieza: ${data.part}\nCorreo del cliente: ${emailInput.value.trim()}`
+      })
+    });
+    const json=await res.json();
+    if(json.success){
+      status.textContent='✓ Enviado. Te responderemos en menos de 24 h.';
+      status.style.color='#15803d';
+      status.style.display='block';
+      btn.textContent='Enviado';
+    }else{
+      throw new Error('fail');
+    }
+  }catch(err){
+    status.textContent='Hubo un error. Intentá más tarde.';
+    status.style.color='var(--accent)';
+    status.style.display='block';
+    btn.disabled=false;
+    btn.textContent=oldText;
+  }
 }
-document.getElementById('email-quote').addEventListener('click',async function(){
+document.querySelectorAll('select,input').forEach(el=>el.addEventListener('input',()=>el.classList.remove('err')));
+</script>
+</body>
+</html>
   const emailWrap=document.getElementById('email-field-wrap');
   const emailInput=document.getElementById('inp-email');
   const status=document.getElementById('email-status');
@@ -631,13 +815,13 @@ document.getElementById('email-quote').addEventListener('click',async function()
       headers:{'Content-Type':'application/json','Accept':'application/json'},
       body:JSON.stringify({
         access_key:'8d25a3ba-6399-4d35-851d-599a125da716',
-        subject:`Solicitud de sourcing - ${data.vehicle}`,
-        from_name:'EuroSource - Formulario',
+        subject:`Cotización - ${data.vehicle}`,
+        from_name:'EuroSource CR - Formulario',
         email:emailInput.value.trim(),
         vehiculo:data.vehicle,
         vin:data.vinLine?data.vinLine.replace('\nVIN: ',''):'No proporcionado',
         pieza:data.part,
-        message:`Nueva solicitud de identificación de pieza:\n\nVehículo: ${data.vehicle}${data.vinLine}\nPieza: ${data.part}\nCorreo del cliente: ${emailInput.value.trim()}`
+        message:`Nueva solicitud de cotización:\n\nVehículo: ${data.vehicle}${data.vinLine}\nPieza: ${data.part}\nCorreo del cliente: ${emailInput.value.trim()}`
       })
     });
     const json=await res.json();
