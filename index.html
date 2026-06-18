@@ -602,10 +602,6 @@ footer{background:var(--navy);padding:56px 32px 32px}
 </div>
 
 <script>
-// ─── SUPABASE SETUP ───
-const SUPABASE_URL = 'https://ygakabwmufnyavzhkbal.supabase.co';
-const SUPABASE_KEY = 'rLcGb8QHvSYmEBCprMbcIA_C2ZrUDTB';
-
 // ─── LOGIN FUNCTIONS ───
 function showLoginModal() {
   document.getElementById('loginModal').classList.add('active');
@@ -879,7 +875,7 @@ function initSupabase() {
     return;
   }
   const SUPABASE_URL = 'https://ygakabwmufnyavzhkbal.supabase.co';
-  const SUPABASE_KEY = 'rLcGb8QHvSYmEBCprMbcIA_C2ZrUDTB';
+  const SUPABASE_KEY = 'sb_publishable_rLcGb8QHvSYmEBCprMbcIA_C2ZrUDTB';
   window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 }
 initSupabase();
