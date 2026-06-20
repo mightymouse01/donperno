@@ -566,7 +566,7 @@ footer{background:var(--navy);padding:56px 32px 32px}
 
     <div id="signupForm" style="display:none">
       <h2>Crear Cuenta</h2>
-      <p>Te enviaremos un correo de verificación</p>
+      <p>Crea una cuenta para rastrear tus órdenes</p>
       
       <div class="modal-field">
         <label>Correo</label>
@@ -671,7 +671,7 @@ async function handleSignup() {
       return;
     }
 
-    successEl.textContent = '✓ Cuenta creada. Verifica tu correo para confirmar.';
+    successEl.textContent = '✓ Cuenta creada. Una vez estemos trabajando en tu orden, podrás ver el progreso aquí.';
     setTimeout(() => {
       showLoginForm();
       document.getElementById('loginEmail').value = email;
